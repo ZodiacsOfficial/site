@@ -1,12 +1,12 @@
 {
   "kind": "synthetic regression benchmark",
   "whatItIsNot": "Not a measured accuracy rate. Every pair here is built by the same engine from synthetic inputs, so this measures whether the comparison classifies the cases its rules describe. It says nothing about how often the tool is right about a disagreement between two independently authored astrology engines, and nothing about real-world users, because no such corpus exists here.",
-  "startedAt": "2026-09-24T20:28:26.095Z",
-  "completedAt": "2026-09-24T20:28:26.590Z",
+  "startedAt": "2026-09-25T12:52:41.177Z",
+  "completedAt": "2026-09-25T12:52:42.021Z",
   "node": "v22.22.2",
   "server": {
     "path": "examples/mcp-server/server.mjs",
-    "sha256": "df96c08a2b2d516492b854ffc4de5a2a110633bf7472aeccf4c32db4a7b43993"
+    "sha256": "60375a7cf75ba9dbc47547a5a83b08243dd008a5764fd04aa8c534fe07d26b2b"
   },
   "expectationsSha256": "70468ade20f70f4a59c141070b5957d43e3e32a96d911accb8a4e77c94d90235",
   "scenarios": {
@@ -85,12 +85,12 @@
     {
       "id": "wraparound",
       "required": "circular wraparound",
-      "differences": 79,
+      "differences": 80,
       "explanations": [
         {
           "id": "instant",
           "evidence": "hypothesis",
-          "covers": 78
+          "covers": 79
         }
       ],
       "assertions": 8,
@@ -120,7 +120,7 @@
     {
       "id": "unrelated-simultaneous",
       "required": "unrelated simultaneous differences",
-      "differences": 84,
+      "differences": 85,
       "explanations": [
         {
           "id": "house-system",
@@ -130,7 +130,7 @@
         {
           "id": "instant",
           "evidence": "hypothesis",
-          "covers": 79
+          "covers": 80
         }
       ],
       "assertions": 6,
@@ -140,12 +140,12 @@
     {
       "id": "insufficient-evidence",
       "required": "insufficient evidence",
-      "differences": 111,
+      "differences": 112,
       "explanations": [
         {
           "id": "instant",
           "evidence": "hypothesis",
-          "covers": 109
+          "covers": 110
         },
         {
           "id": "location",
@@ -180,12 +180,12 @@
     {
       "id": "display-rounding",
       "required": "a difference smaller than the printed precision",
-      "differences": 78,
+      "differences": 79,
       "explanations": [
         {
           "id": "instant",
           "evidence": "hypothesis",
-          "covers": 33
+          "covers": 28
         }
       ],
       "assertions": 5,
@@ -270,12 +270,12 @@
     {
       "id": "wraparound-in-the-default-response",
       "required": "the default response still carries the diagnosis",
-      "differences": 79,
+      "differences": 80,
       "explanations": [
         {
           "id": "instant",
           "evidence": "hypothesis",
-          "covers": 78
+          "covers": 79
         }
       ],
       "assertions": 6,

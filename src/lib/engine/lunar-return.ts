@@ -1,5 +1,5 @@
+import { findLongitudeCrossingsWith } from '@zodiacs/engine/crossings';
 import { bodyLongitude, computeChart } from './full';
-import { findLongitudeCrossingsWith } from './longitude-crossings';
 import type { Chart, ChartInput } from './types';
 
 /** Explicit lunar scan constants; do not inherit the slow-body default step. */

@@ -3,25 +3,25 @@
   "ingresses": [
     {
       "planet": "Mars",
-      "at": "2029-08-07T16:01:29.359Z",
+      "at": "2029-08-07T16:01:37.134Z",
       "sign": "scorpio",
       "retrograde": false
     },
     {
       "planet": "Venus",
-      "at": "2029-08-15T17:06:17.134Z",
+      "at": "2029-08-15T17:06:24.918Z",
       "sign": "libra",
       "retrograde": false
     },
     {
       "planet": "Sun",
-      "at": "2029-08-22T19:51:11.831Z",
+      "at": "2029-08-22T19:51:19.625Z",
       "sign": "virgo",
       "retrograde": false
     },
     {
       "planet": "Mercury",
-      "at": "2029-08-27T02:23:32.559Z",
+      "at": "2029-08-27T02:23:40.359Z",
       "sign": "libra",
       "retrograde": false
     }
@@ -29,15 +29,15 @@
   "lunations": [
     {
       "type": "new",
-      "at": "2029-08-10T01:55:43.549Z",
+      "at": "2029-08-10T01:55:51.378Z",
       "sign": "leo",
-      "degree": 17.746659917538977
+      "degree": 17.74666856704482
     },
     {
       "type": "full",
-      "at": "2029-08-24T01:51:10.485Z",
+      "at": "2029-08-24T01:51:18.312Z",
       "sign": "pisces",
-      "degree": 1.2043250120520952
+      "degree": 1.2043294773779962
     }
   ],
   "stations": [],
@@ -47,143 +47,143 @@
       "b": "Pluto",
       "type": "opposition",
       "orb": 0,
-      "at": "2029-08-01T04:55:29.213Z",
+      "at": "2029-08-01T04:55:36.958Z",
       "aSign": "leo",
-      "aDegree": 9.243886294419156,
+      "aDegree": 9.243886097195741,
       "bSign": "aquarius",
-      "bDegree": 9.243885458782984
+      "bDegree": 9.243885463433116
     },
     {
       "a": "Sun",
       "b": "Neptune",
       "type": "trine",
       "orb": 0,
-      "at": "2029-08-03T01:54:18.515Z",
+      "at": "2029-08-03T01:54:26.261Z",
       "aSign": "leo",
-      "aDegree": 11.037218659266614,
+      "aDegree": 11.037218442584503,
       "bSign": "aries",
-      "bDegree": 11.03721803397002
+      "bDegree": 11.037218036302932
     },
     {
       "a": "Venus",
       "b": "Uranus",
       "type": "square",
       "orb": 0,
-      "at": "2029-08-05T04:46:46.071Z",
+      "at": "2029-08-05T04:46:53.818Z",
       "aSign": "virgo",
-      "aDegree": 17.541511455141062,
+      "aDegree": 17.541511156954584,
       "bSign": "gemini",
-      "bDegree": 17.541510584547552
+      "bDegree": 17.541510574863082
     },
     {
       "a": "Sun",
       "b": "Uranus",
       "type": "sextile",
       "orb": 0,
-      "at": "2029-08-10T01:19:55.778Z",
+      "at": "2029-08-10T01:20:03.523Z",
       "aSign": "leo",
-      "aDegree": 17.72280839746486,
+      "aDegree": 17.72280805558688,
       "bSign": "gemini",
-      "bDegree": 17.722808015778185
+      "bDegree": 17.722808003104717
     },
     {
       "a": "Venus",
       "b": "Saturn",
       "type": "trine",
       "orb": 0,
-      "at": "2029-08-10T23:31:40.634Z",
+      "at": "2029-08-10T23:31:48.379Z",
       "aSign": "virgo",
-      "aDegree": 24.403937768464402,
+      "aDegree": 24.403937327795916,
       "bSign": "taurus",
-      "bDegree": 24.403937290278407
+      "bDegree": 24.40393727329132
     },
     {
       "a": "Mercury",
       "b": "Uranus",
       "type": "square",
       "orb": 0,
-      "at": "2029-08-13T17:09:36.835Z",
+      "at": "2029-08-13T17:09:44.663Z",
       "aSign": "virgo",
-      "aDegree": 17.848825459758245,
+      "aDegree": 17.848826110256596,
       "bSign": "gemini",
-      "bDegree": 17.848825212369547
+      "bDegree": 17.848825230380726
     },
     {
       "a": "Sun",
       "b": "Jupiter",
       "type": "sextile",
       "orb": 0,
-      "at": "2029-08-15T06:39:57.270Z",
+      "at": "2029-08-15T06:40:05.098Z",
       "aSign": "leo",
-      "aDegree": 22.73712637179966,
+      "aDegree": 22.73712686731153,
       "bSign": "libra",
-      "bDegree": 22.7371262276032
+      "bDegree": 22.73712630684406
     },
     {
       "a": "Sun",
       "b": "Saturn",
       "type": "square",
       "orb": 0,
-      "at": "2029-08-17T06:39:40.131Z",
+      "at": "2029-08-17T06:39:47.876Z",
       "aSign": "leo",
-      "aDegree": 24.65934142144613,
+      "aDegree": 24.659340960965324,
       "bSign": "taurus",
-      "bDegree": 24.659340638056392
+      "bDegree": 24.659340621167814
     },
     {
       "a": "Mercury",
       "b": "Saturn",
       "type": "trine",
       "orb": 0,
-      "at": "2029-08-20T03:10:02.406Z",
+      "at": "2029-08-20T03:10:10.234Z",
       "aSign": "virgo",
-      "aDegree": 24.753290923409054,
+      "aDegree": 24.75329133052992,
       "bSign": "taurus",
-      "bDegree": 24.753290561636334
+      "bDegree": 24.753290574891025
     },
     {
       "a": "Mars",
       "b": "Pluto",
       "type": "square",
       "orb": 0,
-      "at": "2029-08-22T02:23:03.672Z",
+      "at": "2029-08-22T02:23:11.417Z",
       "aSign": "scorpio",
-      "aDegree": 8.77433327327958,
+      "aDegree": 8.774332922726103,
       "bSign": "aquarius",
-      "bDegree": 8.774332784794751
+      "bDegree": 8.77433279664092
     },
     {
       "a": "Venus",
       "b": "Pluto",
       "type": "trine",
       "orb": 0,
-      "at": "2029-08-23T03:39:51.173Z",
+      "at": "2029-08-23T03:39:58.918Z",
       "aSign": "libra",
-      "aDegree": 8.75203924908351,
+      "aDegree": 8.752038570728587,
       "bSign": "aquarius",
-      "bDegree": 8.752038333676182
+      "bDegree": 8.752038345804067
     },
     {
       "a": "Venus",
       "b": "Neptune",
       "type": "opposition",
       "orb": 0,
-      "at": "2029-08-24T19:34:25.235Z",
+      "at": "2029-08-24T19:34:33.063Z",
       "aSign": "libra",
-      "aDegree": 10.699636780870605,
+      "aDegree": 10.699637194732077,
       "bSign": "aries",
-      "bDegree": 10.69963607391685
+      "bDegree": 10.699636066719563
     },
     {
       "a": "Venus",
       "b": "Uranus",
       "type": "trine",
       "orb": 0,
-      "at": "2029-08-31T08:21:22.652Z",
+      "at": "2029-08-31T08:21:30.480Z",
       "aSign": "libra",
-      "aDegree": 18.31899401740975,
+      "aDegree": 18.31899429945156,
       "bSign": "gemini",
-      "bDegree": 18.31899339391765
+      "bDegree": 18.318993398764064
     }
   ]
 }

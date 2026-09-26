@@ -689,9 +689,11 @@ export function buildRegistryResearchLedger({
     return frozen(item) || !regeneratingFutureEvent;
   });
   const byId = new Map(retainedItems.map((item) => [item.id, item]));
+  const frozenEvents = retainedItems.filter(frozen).map(eventIdentity).filter(Boolean);
   for (const candidate of generatedItems({ daily, outlook, transitMonths, marketHistory, existingItems })) {
     const existing = byId.get(candidate.id);
     if (existing && frozen(existing)) continue;
+    if (!existing && sameFrozenEvent(candidate, frozenEvents)) continue;
     byId.set(candidate.id, candidate);
   }
   const items = [...byId.values()].sort((left, right) => left.visibleAt.localeCompare(right.visibleAt) || left.id.localeCompare(right.id));
@@ -702,6 +704,30 @@ export function buildRegistryResearchLedger({
     method: REGISTRY_RESEARCH_METHOD,
     items,
   };
+}
+
+// An event brief is named by the instant the transit catalog gives its event.
+// When the catalog is recomputed, as engine 0.1.1-rc.8's observed ΔT moved
+// every event about 6 s, the same event returns under a new instant and so a
+// new id. A frozen brief for it already stands and cannot be rewritten; a
+// second one would repeat it. The same event is the same kind and subject
+// within an hour of the frozen instant.
+const SAME_EVENT_WINDOW_MS = 3_600_000;
+const EVENT_KEY = /^([a-z-]+):(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z):(.+)$/;
+
+function eventIdentity(item) {
+  if (item?.kind !== 'event-brief') return null;
+  const match = EVENT_KEY.exec(item.evidence?.eventKey ?? '');
+  if (!match) return null;
+  return { kind: match[1], at: Date.parse(match[2]), subject: match[3] };
+}
+
+function sameFrozenEvent(candidate, frozenEvents) {
+  const identity = eventIdentity(candidate);
+  if (!identity) return false;
+  return frozenEvents.some((event) => event.kind === identity.kind
+    && event.subject === identity.subject
+    && Math.abs(event.at - identity.at) <= SAME_EVENT_WINDOW_MS);
 }
 
 function withinPilot(item, manifest) {

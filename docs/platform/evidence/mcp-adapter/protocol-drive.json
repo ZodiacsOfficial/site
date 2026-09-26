@@ -1,7 +1,7 @@
 {
   "type": "official-SDK protocol interoperability against the real server process; not a named end-user host, and not a model-driven demonstration",
-  "startedAt": "2026-09-24T20:28:19.323Z",
-  "completedAt": "2026-09-24T20:28:23.216Z",
+  "startedAt": "2026-09-25T12:52:33.526Z",
+  "completedAt": "2026-09-25T12:52:38.208Z",
   "node": "v22.22.2",
   "client": {
     "package": "@modelcontextprotocol/client",
@@ -17,8 +17,8 @@
   },
   "server": {
     "path": "examples/mcp-server/server.mjs",
-    "bytes": 175483,
-    "sha256": "df96c08a2b2d516492b854ffc4de5a2a110633bf7472aeccf4c32db4a7b43993"
+    "bytes": 187656,
+    "sha256": "60375a7cf75ba9dbc47547a5a83b08243dd008a5764fd04aa8c534fe07d26b2b"
   },
   "wire": [
     {
@@ -110,13 +110,13 @@
       "ok": true,
       "detail": {
         "name": "zodiacs-mcp-server",
-        "version": "0.1.0-rc.7"
+        "version": "0.1.0-rc.8"
       }
     },
     {
       "name": "server version is the adapter candidate",
       "ok": true,
-      "detail": "0.1.0-rc.7"
+      "detail": "0.1.0-rc.8"
     },
     {
       "name": "server declares the tools capability",
@@ -157,7 +157,7 @@
       "ok": true,
       "detail": {
         "name": "@zodiacs/engine",
-        "version": "0.1.1-rc.7",
+        "version": "0.1.1-rc.8",
         "releaseStatus": "unpublished-candidate"
       }
     },
@@ -274,7 +274,7 @@
     {
       "name": "the default comparison response repeats no birth detail back",
       "ok": true,
-      "detail": "{\"identical\":false,\"counts\":{\"differences\":111,\"substantive\":111,\"displayOnly\":0,\"explanations\":3},\"output\":\"summary\",\"differences\":[{\"id\":\"instant\",\"area\":\"Inputs\",\"label\":\"Resolved instant (UTC)\",\"d"
+      "detail": "{\"identical\":false,\"counts\":{\"differences\":112,\"substantive\":112,\"displayOnly\":0,\"explanations\":3},\"output\":\"summary\",\"differences\":[{\"id\":\"instant\",\"area\":\"Inputs\",\"label\":\"Resolved instant (UTC)\",\"d"
     },
     {
       "name": "and still says which field moved, how, and by how much",
@@ -573,22 +573,22 @@
     {
       "name": "stderr carried the adapter's startup note, so the capture is real",
       "ok": true,
-      "detail": "zodiacs-mcp-server: ready on stdio: adapter 0.1.0-rc.7, engine 0.1.1-rc.7, no network\n"
+      "detail": "zodiacs-mcp-server: ready on stdio: adapter 0.1.0-rc.8, engine 0.1.1-rc.8, no network\n"
     },
     {
       "name": "stderr carried only the adapter's own notes",
       "ok": true,
-      "detail": "zodiacs-mcp-server: ready on stdio: adapter 0.1.0-rc.7, engine 0.1.1-rc.7, no network\n"
+      "detail": "zodiacs-mcp-server: ready on stdio: adapter 0.1.0-rc.8, engine 0.1.1-rc.8, no network\n"
     },
     {
       "name": "stderr carried no birth detail, coordinate or record content",
       "ok": true,
-      "detail": "zodiacs-mcp-server: ready on stdio: adapter 0.1.0-rc.7, engine 0.1.1-rc.7, no network\n"
+      "detail": "zodiacs-mcp-server: ready on stdio: adapter 0.1.0-rc.8, engine 0.1.1-rc.8, no network\n"
     },
     {
       "name": "the transport exposes the server process id, so the next check measures something",
       "ok": true,
-      "detail": 2267
+      "detail": 26513
     },
     {
       "name": "the server process is gone after the client closes",
@@ -686,7 +686,7 @@
           1,
           6
         ],
-        "stderr": "zodiacs-mcp-server: ready on stdio: adapter 0.1.0-rc.7, engine 0.1.1-rc.7, no network"
+        "stderr": "zodiacs-mcp-server: ready on stdio: adapter 0.1.0-rc.8, engine 0.1.1-rc.8, no network"
       }
     },
     {
@@ -700,7 +700,7 @@
           83,
           7
         ],
-        "stderr": "zodiacs-mcp-server: ready on stdio: adapter 0.1.0-rc.7, engine 0.1.1-rc.7, no network"
+        "stderr": "zodiacs-mcp-server: ready on stdio: adapter 0.1.0-rc.8, engine 0.1.1-rc.8, no network"
       }
     },
     {

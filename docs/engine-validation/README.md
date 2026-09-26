@@ -7,8 +7,9 @@ matters most — what the result does not establish.
 Read it with one thing in mind: **every position comparison here is against
 another program, not against the sky.** No position in this directory was
 checked against an observation. The one observed quantity used is the Earth's
-rotation: the IERS value of ΔT, in section 1, which checks the engine's clock
-rather than a position.
+rotation: ΔT, which the engine's clock takes from the IERS and US Naval
+Observatory records since 0.1.1-rc.8, and which section 1 checks against the
+IERS values. It checks the clock rather than a position.
 
 The shared lineage is real but not uniform, and the difference matters for the
 two bodies that produce the extremes below. Swiss Ephemeris and JPL Horizons
@@ -35,11 +36,12 @@ Ephemeris* for the Moon. Zodiacs did not write those models.
 | Positions | Swiss 2.10.03 / DE441, 6 frozen cases | 6.07″ node longitude | [`swiss-node-polar/`](swiss-node-polar/) |
 | Positions | Swiss 2.10.03 / DE441, 8 epoch and station cases | inside frozen gates (a pass, not a residual) | [`swiss-eight-cases/`](swiss-eight-cases/) |
 | Positions | Swiss 2.10.03 / `.se1`, 180-measurement distribution | 18.64″ within 1801–2026 | [`../platform/evidence/swiss-benchmark/`](../platform/evidence/swiss-benchmark/) |
-| Positions | Swiss 2.10.03 / `.se1`, every tenth day 1800–2199, ten bodies and the true node | 22.96″ to 2026 at the same UT (Venus, 1878); 29.12″ to 2199 at the same TT (Pluto) | [`multiyear-1800-2199.json`](../platform/evidence/swiss-benchmark/multiyear-1800-2199.json) |
+| Positions | Swiss 2.10.03 / `.se1`, every tenth day 1800–2199, ten bodies and the true node | 22.92″ to 2026 at the same UT (Venus, 1878); 29.12″ to 2199 at the same TT (Pluto) | [`multiyear-1800-2199.json`](../platform/evidence/swiss-benchmark/multiyear-1800-2199.json) |
+| Clock (ΔT) | IERS EOP 20 C04 and finals2000A, twelve preregistered dates and every day from 1962 | 0.031 s on the twelve dates; 0.083 s worst day | [`../platform/evidence/deltat-2026-09-25/`](../platform/evidence/deltat-2026-09-25/) |
 | Angles and houses | Swiss `houses_ex`: three polar cases and five Placidus cases in the suite; the audit's latitude grid | 1.58″ worst angle and exact whole-sign cusps in the polar cases; ascendant within 6.4″ of an ERFA arbiter on the grid since rc.7 (up to 512″ near 66° before) | [`swiss-node-polar/`](swiss-node-polar/), [audit](../platform/evidence/engine-audit-2026-09-22/LEDGER.md) |
 | Local time | host IANA/ICU, two Node majors and a browser | no disagreement in the cases run (a pass, not a residual) | [`../platform/evidence/site-engine-rc6/`](../platform/evidence/site-engine-rc6/) |
 | Event search | Swiss hourly scans, independent roots | one contract **failed-incomplete** | [`transit-windows/`](transit-windows/), [`swiss-lunar-return/`](swiss-lunar-return/) |
-| Runtime support | Node 22.22.2 and Node 24.21.0 for rc.7; Node 22.23.2, Node 24.19.0 and Chrome 152 for rc.6 | parity in the cases run (a pass, not a residual) | [`../platform/evidence/site-engine-rc7/`](../platform/evidence/site-engine-rc7/), [`../platform/evidence/site-engine-rc6/`](../platform/evidence/site-engine-rc6/) |
+| Runtime support | Node 22.22.2 and Node 24.21.0 for rc.8 and rc.7; Node 22.23.2, Node 24.19.0 and Chrome 152 for rc.6 | parity in the cases run (a pass, not a residual) | [`../platform/evidence/site-engine-rc8/`](../platform/evidence/site-engine-rc8/), [`../platform/evidence/site-engine-rc7/`](../platform/evidence/site-engine-rc7/), [`../platform/evidence/site-engine-rc6/`](../platform/evidence/site-engine-rc6/) |
 
 ## 1. Positions
 
@@ -74,37 +76,39 @@ the current suite still passes them, but those maxima are that run's.
 **The distribution.** [`swiss-benchmark/`](../platform/evidence/swiss-benchmark/)
 answers a different question from the packs: not "did this case stay inside its
 gate" but "how far apart are the two implementations, typically and at worst".
-The corpus is 180 measurements, declared before any number was taken. Over the
-160 between 1801 and 2026 the median longitude disagreement is 1.62″, the 95th
-percentile 12.08″ and the worst 18.64″ (Pluto, 1801). Over all 180, which
-brings in the two far-future cases below, it is 1.88″, 14.90″ and 159.38″.
-Each set is quoted with its own denominator, because mixing them is how a
-distribution gets flattered.
+The corpus is 180 measurements, declared before any number was taken. On
+0.1.1-rc.8 (2026-09-25, `report-measure-rc8.json`), over the 160 between 1801
+and 2026 the median longitude disagreement is 1.60″, the 95th percentile
+12.09″ and the worst 18.64″ (Pluto, 1801). Over all 180, which brings in the
+far-future cases below, it is 1.65″, 12.63″ and 24.77″. Each set is quoted
+with its own denominator, because mixing them is how a distribution gets
+flattered.
 
 **The dense run.** Dates picked in advance can miss a body's worst moments,
-so on 2026-09-23 the same configuration was run every tenth day from 1800 to
-2199 at noon UTC, for the ten bodies and the true node
+so the same configuration was run every tenth day from 1800 to 2199 at noon
+UTC, for the ten bodies and the true node
 ([`multiyear-1800-2199.json`](../platform/evidence/swiss-benchmark/multiyear-1800-2199.json),
 statistics only, by `tools/multiyear-zodiacs.mjs` and `tools/multiyear_swiss.py`
-beside it). Up to 2026, at the same UT, the 91,201 longitudes have a median
-difference of 1.94″, a 95th percentile of 11.90″ and a largest of 22.96″
-(Venus, 1878), where the sample's worst was 18.64″. At the same TT, which
-takes the clock out, the largest over the whole span is 29.12″ (Pluto, 2199),
-and the Moon stays within 7.15″ from 2150 to 2199 where at the same UT it
-reaches 183.12″: the far-future Moon residuals are the clock.
+beside it), first on 2026-09-23 and again on rc.8. Up to 2026, at the same
+UT, the 91,201 longitudes have a median difference of 1.96″, a 95th
+percentile of 11.90″ and a largest of 22.92″ (Venus, 1878), where the sample's
+worst was 18.64″. At the same TT, which takes the clock out, the largest over
+the whole span is 29.12″ (Pluto, 2199), and the Moon stays within 7.15″ from
+2150 to 2199, where at the same UT it reaches 20.47″: past the IERS
+predictions the two programs' clocks are two extrapolations.
 
-Two of the 180 exceed one arcminute, both the Moon far in the future: 64.8″ at
-2100 and 159.4″ at 2190. That is a clock difference. The two programs
-extrapolate ΔT past the observed record differently — 109.5 s apart at 2100 —
-and the Moon moves about 0.549″ per second of time, which accounts for 60.1″
-of the 64.8″ — about 93%, not all of it. Pinning ΔT to the reference collapses
-**the DE440s prototype's** 2100 case from 63.887″ to −0.025″; the shipped
-engine was never re-run that way, and the same correction against its own
-64.768″ would land near 0.9″ rather than near zero. The 2150 and 2190 cases
-were never decomposed at all — they fall outside DE440s coverage, so the same
-mechanism plainly dominates but that is an expectation, not a measurement.
-Reporting any of these residuals as an ephemeris error would still be wrong
-about the cause.
+None of the 180 exceeds one arcminute on rc.8. The far-future Moon is 7.5″
+from Swiss at 2100 and 15.3″ at 2190, and the clock is still most of it: the
+two programs extrapolate ΔT past the IERS predictions differently — Swiss
+93.18 s at 2100, the engine 78.93 s with a 1-σ of 42.39 s, 14.25 s apart — and
+the Moon moves about 0.549″ per second of time, 7.8″ for that gap. Up to rc.7
+the engine's clock read 202.65 s at 2100, and two of the 180 exceeded one
+arcminute, both the Moon: 64.8″ at 2100 and 159.4″ at 2190. Pinning ΔT to the
+reference collapsed **the DE440s prototype's** 2100 case from 63.887″ to
+−0.025″; the shipped engine was never re-run that way, and the same correction
+would land near 0.9″ rather than near zero. The 2150 and 2190 cases were never
+decomposed — they fall outside DE440s coverage. Reporting any of these
+residuals as an ephemeris error would be wrong about the cause.
 
 *Correction, 2026-09-23.* "A clock difference" is right about the far future
 and silent about the present, where ΔT is measured. The formula the engine uses
@@ -115,14 +119,28 @@ Moon's mean rate that is 3.46″ today. The values, for 2017, 2020, 2024 and
 [`../platform/evidence/deltat-2026-09-23/`](../platform/evidence/deltat-2026-09-23/).
 Step 1.4 of the engine brief replaces the formula with observed ΔT.
 
+*Addition, 2026-09-25.* It has. From 0.1.1-rc.8 the engine's ΔT is model
+`zodiacs-deltat/1`: Stephenson, Morrison and Hohenkerk's 2016 reconstruction
+to 1941, US Naval Observatory and IERS records after it, the IERS Bulletin A
+predictions, then an extrapolation whose 1-σ band grows with the years. It
+reads 69.20 s on 2026-09-22, and from 1962 to 2026-09-24 it is within 0.084 s
+of the IERS value on every day (RMS 0.022 s); every chart returns its value,
+band and table. The model, its sources and the gates it was held to before any
+code are in
+[`../platform/evidence/deltat-2026-09-25/`](../platform/evidence/deltat-2026-09-25/).
+Before about 1955 the Moon moves further from Swiss at the same UT than it
+was — a median of 3.9″ rather than 2.9″ over 1850–1899 — because rc.7's clock
+error there partly offset the analytic Moon's own; that is the Moon's error,
+now shown whole.
+
 **Neptune is the worst modern body in both comparisons** — a single-epoch
 14.77″ against Horizons, a median of 11.5″ against Swiss. Those are different
 statistics and should not be read as one number seen twice, and the two
 references are not independent of each other, so this is not two witnesses
 agreeing. What it suggests, weakly, is a truncated outer-planet series rather
 than a convention mismatch, since a convention error would not single out one
-planet. Neptune is not the worst body overall: Pluto reaches 25.01″ and the
-Moon 159.38″.
+planet. Neptune is not the worst body overall: in the 180 on rc.8, Pluto
+reaches 24.77″ and the Moon 15.34″, both at 2190.
 
 Not established: that any of this is observational accuracy, or that the
 residuals hold between the epochs measured. The measured span is 1801–2026
@@ -132,14 +150,16 @@ sampled sparsely in between, which is not the same as measured across it.
 
 And the package bounds nothing. `1800–2199` is this site's own form validation
 (`src/lib/share.ts`, `src/lib/engine/transit-window-core.ts`); `natalChart`
-will compute year 900 or year 3500 and return a chart with no error and no
-flag. Nothing here says anything about those.
+will compute year 900 or year 3500 and return a chart with no error. Nothing
+here says anything about those, and since rc.8 the chart says so: outside
+1800–2200 it carries the `outside-reference-span` flag.
 
 ## 2. Angles and houses
 
 Swiss `swe.houses_ex(jdUT1, lat, lon, b'W', 0)` at Tromsø, Longyearbyen and
 Longyearbyen's southern mirror: measured angle residual 0.000439812° (1.58″)
-with rc.7 and 0.000434825° (1.57″) with engine 0.1.0 when the pack was frozen,
+with rc.7 and rc.8 and 0.000434825° (1.57″) with engine 0.1.0 when the pack
+was frozen,
 and every whole-sign cusp matched exactly. The suite's five Placidus cases, at
 latitudes up to 60.2°, pass gates of 0.1° for ASC/MC and 0.2° for cusps. The
 2026-09-22 audit measured more widely: on its latitude grid the ascendant was
@@ -252,22 +272,25 @@ light-time, aberration or deflection pass, so the two correction paths are
 **not** claimed to be identical, only to agree inside the stated budget.
 
 The event times the site publishes were measured against Swiss Ephemeris on
-2026-09-23
-([`events-vs-swiss-2026-09-23/`](../platform/evidence/events-vs-swiss-2026-09-23/)):
-from 2026 to 2030, all 124 new and full moons and 24 eclipse peaks are
-within 14 seconds, the 92 stations within 41 minutes (Pluto), and the sign
-changes and exact aspects of Uranus, Neptune or Pluto within 6.4 hours.
+2026-09-23 and again on rc.8's catalog on 2026-09-25
+([`events-vs-swiss-2026-09-25/`](../platform/evidence/events-vs-swiss-2026-09-25/)):
+from 2026 to 2030, all 124 new and full moons are within 5.2 seconds and the
+24 eclipse peaks within 10.5 seconds, the 92 stations within 41 minutes
+(Pluto), and the sign changes and exact aspects of Uranus, Neptune or Pluto
+within 6.4 hours.
 Those slow events are ill-conditioned: a few arcseconds of position error in
 an outer planet, or in the ±0.25-day speed estimate the station finder uses,
 moves the instant by minutes to hours. The pages state these limits, and
 `scripts/claims-bindings.test.mjs` holds the copy to the measurement.
 
-The package's longitude-crossing search (`findLongitudeCrossings`) caps
-ephemeris samples at 10,000 and refuses larger requests; the site's own solver
-has no such cap. Sampling can miss an event between steps; interior tangencies are omitted, and
-direction at a window endpoint rests on one-sided evidence. The site's own
-return solver also examines each sampled turn of the motion, which finds the
-grazing passes a coarse step misses: all 4,941 cases of a station-graze corpus
+Since rc.8 the package and the site use one longitude-crossing solver
+(`@zodiacs/engine/crossings`, and `findLongitudeCrossings` on the engine's own
+longitudes). It has no sample budget; `searchLongitudeCrossings` takes an
+optional one and refuses a search whole, rather than throwing, when the budget
+would be exceeded. Sampling can miss an event between steps, and direction at
+a window endpoint rests on one-sided evidence. The solver also examines each
+sampled turn of the motion, which finds the grazing passes a coarse step
+misses: all 4,941 cases of a station-graze corpus
 ([`phase1-events/`](../platform/evidence/phase1-events/)), where the plain
 sign-change search found 3,627.
 
@@ -278,16 +301,17 @@ about 2108 shows fewer Saturn seasons. The result records the clipping
 the locale catalogs (step 1.7 of the engine brief).
 
 Not established: complete event discovery. Nothing here is a guarantee that
-every event in a window is found, and the cap is a sampling bound rather than
-a time limit.
+every event in a window is found; the solver's own documentation says it is
+tested, not proven complete.
 
 ## 5. Runtime support
 
 ESM only, TypeScript declarations included, no CommonJS export. The manifest
-declares Node ≥18. What was actually executed is narrower: Node 22.23.2 and
-24.19.0 for the parity matrix and the public-download consumer check, and
-Chrome 152 for the browser run, with thirteen network, storage and cookie
-observer negative controls showing zero calls during calculation.
+declares Node ≥18. What was actually executed is narrower: for rc.8, Node
+22.22.2 and 24.21.0 for the parity matrix and the public-download consumer
+check; for rc.6, Node 22.23.2 and 24.19.0, and Chrome 152 for the browser run,
+with thirteen network, storage and cookie observer negative controls showing
+zero calls during calculation.
 
 Not established: every Node version the manifest allows, or every browser. A
 finite matrix is a finite matrix.
@@ -305,8 +329,8 @@ finite matrix is a finite matrix.
 - Not a claim that the engine is the most accurate available. On the
   measurements here a DE440s-backed prototype, with ΔT matched to Swiss's,
   agrees with Swiss to 0.16″ worst case on the rows inside DE440s's coverage,
-  where this engine, on its own ΔT, reaches 64.8″ (about 0.9″ would remain
-  with the same correction). It costs 2.06× the warm p50 runtime — 3.39× at
+  where this engine, on its own ΔT, reaches 17.40″ (Neptune, rc.8; 64.8″, the
+  Moon at 2100, up to rc.7). It costs 2.06× the warm p50 runtime — 3.39× at
   the warm p95 — and 31 MiB of data. That prototype has not been adopted and does not
   run in production; its gates are in
   [`swiss-benchmark/NEXT.md`](../platform/evidence/swiss-benchmark/NEXT.md).
@@ -325,8 +349,10 @@ the audit's re-fetch on 2026-09-22 (API version 1.2, DE441) matched six of
 the seven 2020 values exactly and Neptune to 0.004″, but the provider version
 of the original fetch is not recorded, and `swiss-eight-cases/README.md` says
 it "remains unknown". The Swiss ΔT of
-93.18 s at 2100 was transcribed from a run rather than committed as a receipt
-(astronomy-engine's 202.65 s is reproducible offline). And the benchmark's
+93.18 s at 2100 was transcribed from a run rather than committed as a receipt;
+since 2026-09-25 it is committed with the tool that reads it
+(`../platform/evidence/deltat-2026-09-25/outputs/swiss-deltat.json`, by
+`tools/moon/swiss_deltat.py`). And the benchmark's
 performance table has no committed JSON; its `prototype, engine ΔT` row, which
 had none either, was recovered and committed on 2026-09-20
 (`precision-2026-09-20/raw/recovered-report-proto-engine-deltat.json`).
@@ -352,3 +378,34 @@ here as the record:
 - the benchmark, under reproducing any of it: "the benchmark's `prototype,
   engine ΔT` row and its performance table have no committed JSON beside the
   four that do".
+
+Vendoring engine 0.1.1-rc.8 on 2026-09-25 corrected these in place, with the
+engine's new clock and the re-runs it needed. Their earlier wording is kept
+here as the record:
+
+- the introduction: "the IERS value of ΔT, in section 1, which checks the
+  engine's clock rather than a position";
+- the table's every-tenth-day row: "22.96″ to 2026 at the same UT (Venus,
+  1878)"; its runtime row: "Node 22.22.2 and Node 24.21.0 for rc.7";
+- section 1, the distribution: "the median longitude disagreement is 1.62″,
+  the 95th percentile 12.08″ … Over all 180, which brings in the two far-future
+  cases below, it is 1.88″, 14.90″ and 159.38″", measured on rc.6;
+- section 1, the dense run: "a median difference of 1.94″ … and a largest of
+  22.96″ … where at the same UT it reaches 183.12″: the far-future Moon
+  residuals are the clock";
+- section 1, the far future: "Two of the 180 exceed one arcminute, both the
+  Moon far in the future: 64.8″ at 2100 and 159.4″ at 2190. That is a clock
+  difference … 109.5 s apart at 2100 … which accounts for 60.1″ of the 64.8″";
+- section 1, on Neptune: "Pluto reaches 25.01″ and the Moon 159.38″";
+- section 1, on bounds: "return a chart with no error and no flag";
+- section 4, event times: "all 124 new and full moons and 24 eclipse peaks are
+  within 14 seconds";
+- section 4, the search: "The package's longitude-crossing search
+  (`findLongitudeCrossings`) caps ephemeris samples at 10,000 and refuses
+  larger requests; the site's own solver has no such cap", and "the cap is a
+  sampling bound rather than a time limit";
+- section 5: "Node 22.23.2 and 24.19.0 for the parity matrix and the
+  public-download consumer check, and Chrome 152 for the browser run";
+- the prototype: "where this engine, on its own ΔT, reaches 64.8″ (about 0.9″
+  would remain with the same correction)";
+- reproducing it: "(astronomy-engine's 202.65 s is reproducible offline)".

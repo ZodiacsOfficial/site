@@ -25,6 +25,8 @@ export const replay: Replay = (request: ReplayRequest): ReplayResult | null => {
       // though the time were known would invent a chart the receipt never
       // described, and then offer it as evidence about that receipt.
       timeKnown: request.timeKnown,
+      // The same goes for a pinned ΔT: without it this is a different chart.
+      ...(request.deltaT === undefined ? {} : { deltaT: request.deltaT }),
     } as Parameters<typeof natalChart>[0]) as unknown as ChartShape;
     return { angles: chart.angles, bodies: chart.bodies, cusps: chart.houses?.cusps ?? null };
   } catch {

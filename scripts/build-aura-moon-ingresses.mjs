@@ -5,6 +5,7 @@
  *
  *   npm run data:aura-moon-ingresses
  */
+import './lib/deltat-install.mjs';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';

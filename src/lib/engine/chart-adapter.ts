@@ -40,5 +40,6 @@ export function adaptChart(chart: EngineChart, input: ChartInput): Chart {
     aspects: chart.aspects,
     flags: [...chart.flags],
     engineVersion: chart.engineVersion,
+    deltaT: chart.deltaT,
   };
 }

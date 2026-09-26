@@ -5,72 +5,72 @@
   "bodies": [
     {
       "body": "Moon",
-      "lon": 0.9076087738335445,
+      "lon": 0.90662511170774,
       "sign": "aries",
-      "degree": 0.9076087738335445,
+      "degree": 0.90662511170774,
       "retrograde": false
     },
     {
       "body": "Sun",
-      "lon": 183.42273348154285,
+      "lon": 183.422662005029,
       "sign": "libra",
-      "degree": 3.4227334815428776,
+      "degree": 3.4226620050289966,
       "retrograde": false
     },
     {
       "body": "Mercury",
-      "lon": 204.51850166241226,
+      "lon": 204.51839871343742,
       "sign": "libra",
-      "degree": 24.51850166241229,
+      "degree": 24.518398713437364,
       "retrograde": false
     },
     {
       "body": "Venus",
-      "lon": 217.62735546015782,
+      "lon": 217.62733747747274,
       "sign": "scorpio",
-      "degree": 7.627355460157787,
+      "degree": 7.627337477472793,
       "retrograde": false
     },
     {
       "body": "Mars",
-      "lon": 119.04587818493786,
+      "lon": 119.0458350462003,
       "sign": "cancer",
-      "degree": 29.045878184937862,
+      "degree": 29.045835046200295,
       "retrograde": false
     },
     {
       "body": "Jupiter",
-      "lon": 138.7712394849782,
+      "lon": 138.77122598690107,
       "sign": "leo",
-      "degree": 18.771239484978196,
+      "degree": 18.771225986901072,
       "retrograde": false
     },
     {
       "body": "Saturn",
-      "lon": 11.925970449354338,
+      "lon": 11.925976084025251,
       "sign": "aries",
-      "degree": 11.925970449354338,
+      "degree": 11.925976084025251,
       "retrograde": true
     },
     {
       "body": "Uranus",
-      "lon": 65.59274279330828,
+      "lon": 65.5927437512637,
       "sign": "gemini",
-      "degree": 5.592742793308275,
+      "degree": 5.592743751263697,
       "retrograde": true
     },
     {
       "body": "Neptune",
-      "lon": 2.990067635003925,
+      "lon": 2.9900696600446395,
       "sign": "aries",
-      "degree": 2.990067635003925,
+      "degree": 2.9900696600446395,
       "retrograde": true
     },
     {
       "body": "Pluto",
-      "lon": 303.1579578799579,
+      "lon": 303.1579585345022,
       "sign": "aquarius",
-      "degree": 3.1579578799578485,
+      "degree": 3.1579585345021997,
       "retrograde": true
     }
   ],
@@ -87,11 +87,11 @@
       "b": "Neptune",
       "type": "opposition",
       "orb": 0,
-      "at": "2026-09-26T01:41:39.388Z",
+      "at": "2026-09-26T01:41:45.650Z",
       "aSign": "libra",
-      "aDegree": 3.001990699322846,
+      "aDegree": 3.001990249315554,
       "bSign": "aries",
-      "bDegree": 3.0019899335931086
+      "bDegree": 3.0019899463140973
     },
     {
       "kind": "aspect",
@@ -99,18 +99,18 @@
       "b": "Pluto",
       "type": "trine",
       "orb": 0,
-      "at": "2026-09-26T05:34:26.664Z",
+      "at": "2026-09-26T05:34:33.009Z",
       "aSign": "libra",
-      "aDegree": 3.160375950305138,
+      "aDegree": 3.160376440310756,
       "bSign": "aquarius",
-      "bDegree": 3.1603758760659275
+      "bDegree": 3.1603758714718424
     },
     {
       "kind": "lunation",
       "type": "full",
-      "at": "2026-09-26T16:48:53.293Z",
+      "at": "2026-09-26T16:48:59.556Z",
       "sign": "aries",
-      "degree": 3.6193485037659343
+      "degree": 3.6193423751733462
     }
   ]
 }

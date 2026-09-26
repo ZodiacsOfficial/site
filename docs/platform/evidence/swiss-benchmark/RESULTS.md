@@ -241,3 +241,47 @@ Moon stays within 7.15″ from 2150 to 2199, where at the same UT it reaches
 Run again on 2026-09-24 with 0.1.1-rc.7, which changed no positions: all
 14,610 position lines matched rc.6's byte for byte, the statistics came out
 identical, and the file now names rc.7 and that dump's digest.
+
+## Addition, 2026-09-25: engine rc.8's clock
+
+`@zodiacs/engine` 0.1.1-rc.8 computes on observed ΔT (model
+`zodiacs-deltat/1`, `../deltat-2026-09-25/`) where rc.6 and rc.7 used
+astronomy-engine's 2004 polynomial. Positions at a given TT are unchanged;
+every chart's TT, and so every position at a given UT, moved. Both
+comparisons were run again on the vendored rc.8, in the configuration above,
+with every Swiss call answered from the `.se1` files.
+
+The 180 measurements, by `tools/dump-zodiacs.mjs`, `tools/dump_swiss.py` and
+`tools/compare.mjs`, are [`report-measure-rc8.json`](report-measure-rc8.json);
+`report-measure.json` stays as rc.6's run, the one the tables above describe.
+
+| longitude | median | 95th percentile | largest |
+| --- | ---: | ---: | ---: |
+| all 180, rc.6 | 1.884″ | 14.903″ | 159.379″, Moon 2190 |
+| all 180, rc.8 | 1.649″ | 12.627″ | 24.770″, Pluto 2190 |
+| the 160 from 1801 to 2026, rc.8 | 1.6″ | 12.1″ | 18.6″, Pluto 1801 |
+| the Moon's 16 from 1801 to 2026, rc.6 | 1.1″ | | 5.2″ |
+| the Moon's 16 from 1801 to 2026, rc.8 | 0.9″ | | 7.6″, 1801 |
+
+The two far-future Moon cases fall from 64.8″ to 7.5″ at 2100 and from
+159.4″ to 15.3″ at 2190: the model reads ΔT at 2100 as 78.93 s with a 1-σ of
+42.39 s, where rc.7 read 202.65 s and Swiss 93.18 s. No measurement exceeds
+one arcminute. The Moon at 1801 moves from 5.2″ to 7.6″, as amendment A2 of
+the preregistration said it would before 1955: rc.7's ΔT error there partly
+offset the analytic Moon's own.
+
+The every-tenth-day comparison, [`multiyear-1800-2199.json`](multiyear-1800-2199.json),
+now holds rc.8's run; `tools/multiyear-zodiacs.mjs` installs the engine's
+clock before it reads the engine's TT.
+
+| longitude, all eleven bodies, rc.8 | median | 95th percentile | largest |
+| --- | ---: | ---: | ---: |
+| to 2026, same UT (91,201) | 1.96″ | 11.90″ | 22.92″, Venus 1878 |
+| 2027–2199, same UT (69,509) | 2.87″ | 15.42″ | 29.10″, Pluto 2199 |
+| to 2026, same TT | 1.96″ | 11.90″ | 22.92″, Venus 1878 |
+| 2027–2199, same TT | 2.19″ | 15.03″ | 29.12″, Pluto 2199 |
+
+From 2150 to 2199 the Moon is within 7.15″ at the same TT and 20.47″ at the
+same UT, where rc.7 reached 183.12″. By half-century the Moon's median at the
+same UT moves from 4.78″ to 6.60″ over 1800–1849 and from 2.64″ to 0.67″ over
+2000–2049; the file has every body by half-century.

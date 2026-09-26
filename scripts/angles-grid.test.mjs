@@ -20,6 +20,7 @@
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import './lib/deltat-install.mjs';
 import { e_tilt, MakeTime, SiderealTime } from 'astronomy-engine';
 import { describe, expect, it } from 'vitest';
 import { computeChart } from '../src/lib/engine/full';

@@ -1,6 +1,6 @@
 {
   "type": "browser acceptance for /developers/compare/ against a local preview of the built site; not a drive against the deployed origin, which is recorded separately in live-drive.json",
-  "completedAt": "2026-09-18T12:03:07.438Z",
+  "completedAt": "2026-09-25T13:00:18.323Z",
   "node": "v22.22.2",
   "viewports": [
     "1280x900",
@@ -68,10 +68,10 @@
       "name": "desktop: and the page says why, in its stated limits",
       "ok": true,
       "detail": [
-        "Local recalculation runs engine 0.1.1-rc.6, and one receipt names 99.0.0. Recalculating it here would be a different calculation, not the one it records, so nothing is demonstrated about why these two differ.",
-        "Reproducing the difference would need engine 0.1.1-rc.6 and 99.0.0 side by side. This page has 0.1.1-rc.6 only, so no recalculation can decide it.",
+        "Local recalculation runs engine 0.1.1-rc.8, and one receipt names 99.0.0. Recalculating it here would be a different calculation, not the one it records, so nothing is demonstrated about why these two differ.",
+        "Reproducing the difference would need engine 0.1.1-rc.8 and 99.0.0 side by side. This page has 0.1.1-rc.8 only, so no recalculation can decide it.",
         "Only the house system is re-run here. A different moment or place is never promoted past a hypothesis, even when both records name the same engine.",
-        "Local recalculation uses engine 0.1.1-rc.6; the second receipt names 99.0.0, so replaying it here would be a different calculation, not the original."
+        "Local recalculation uses engine 0.1.1-rc.8; the second receipt names 99.0.0, so replaying it here would be a different calculation, not the original."
       ]
     },
     {
@@ -201,10 +201,10 @@
       "name": "mobile: and the page says why, in its stated limits",
       "ok": true,
       "detail": [
-        "Local recalculation runs engine 0.1.1-rc.6, and one receipt names 99.0.0. Recalculating it here would be a different calculation, not the one it records, so nothing is demonstrated about why these two differ.",
-        "Reproducing the difference would need engine 0.1.1-rc.6 and 99.0.0 side by side. This page has 0.1.1-rc.6 only, so no recalculation can decide it.",
+        "Local recalculation runs engine 0.1.1-rc.8, and one receipt names 99.0.0. Recalculating it here would be a different calculation, not the one it records, so nothing is demonstrated about why these two differ.",
+        "Reproducing the difference would need engine 0.1.1-rc.8 and 99.0.0 side by side. This page has 0.1.1-rc.8 only, so no recalculation can decide it.",
         "Only the house system is re-run here. A different moment or place is never promoted past a hypothesis, even when both records name the same engine.",
-        "Local recalculation uses engine 0.1.1-rc.6; the second receipt names 99.0.0, so replaying it here would be a different calculation, not the original."
+        "Local recalculation uses engine 0.1.1-rc.8; the second receipt names 99.0.0, so replaying it here would be a different calculation, not the original."
       ]
     },
     {

@@ -10,6 +10,7 @@
  * lite Sun/Moon math covers the live positions. Re-run yearly (or wire
  * a cron) so the window stays ahead of the calendar.
  */
+import './lib/deltat-install.mjs';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';

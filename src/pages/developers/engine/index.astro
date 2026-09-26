@@ -158,14 +158,14 @@ const jsonLd = [{
         Every change runs a comparison against NASA JPL Horizons reference
         data; at the two dates it checks, 1907 and
         2020, the largest difference is 14.8 arcseconds (Neptune, 2020).
-        Separately, on 20 September 2026 the
-        engine was measured against Swiss Ephemeris 2.10.03 over a stratified
-        set of dates written down beforehand: across the 160 measurements from
-        1801 to 2026 the median disagreement in ecliptic longitude is{' '}
+        Separately, the engine was measured against Swiss Ephemeris 2.10.03
+        over a stratified set of dates written down beforehand, on 20
+        September 2026 and again on 25 September: across the 160 measurements
+        from 1801 to 2026 the median disagreement in ecliptic longitude is{' '}
         <strong>1.6 arcseconds</strong> and the largest is{' '}
         <strong>18.6 arcseconds</strong>. Compared every tenth day from 1800
         to 2026 instead, for the ten bodies and the North Node, the median is
-        1.9 arcseconds and the largest <strong>23.0 arcseconds</strong>
+        2.0 arcseconds and the largest <strong>22.9 arcseconds</strong>
         (Venus, 1878).
       </p>
       <p>
@@ -177,23 +177,28 @@ const jsonLd = [{
         observation.
       </p>
       <p>
-        Further out the disagreement grows, and past the observed record it is
-        mostly the clock: the Moon is <strong>64.8 arcseconds</strong> at 2100 and{' '}
-        <strong>159.4 arcseconds</strong> at 2190. At 2100 about 60 of those
-        64.8 come from the two programs extrapolating the Earth's slowing
-        rotation differently rather than either ephemeris being wrong. The 2190
-        case was not taken apart the same way, but at the same instant of
-        Terrestrial Time the Moon stays within 7.1 arcseconds from 2150 to
-        2199, so there too it is the clock. The engine's clock model is already off today: on 22
-        September 2026 it reads 75.5 seconds where the IERS value is 69.2,
-        which on its own moves the Moon about 3.5 arcseconds.
+        Up to the present the clock is observed. Since 0.1.1-rc.8 the engine
+        takes ΔT, the gap between atomic time and the Earth's rotation, from
+        Stephenson, Morrison and Hohenkerk's 2016 reconstruction before 1941,
+        from US Naval Observatory and IERS records after it, and from the IERS
+        predictions: from 1962 on it is within 0.09 seconds of the IERS value
+        on every day, and every chart returns the value it used with its
+        one-sigma uncertainty. Past the predictions both programs
+        extrapolate, and there the Moon is{' '}
+        <strong>7.5 arcseconds</strong> from Swiss at 2100 and{' '}
+        <strong>15.3 arcseconds</strong> at 2190; at the same instant of
+        Terrestrial Time, which takes the clock out, it stays within 7.2
+        arcseconds from 2150 to 2199. Until rc.8 the clock was a fixed
+        formula: on 22 September 2026 it read 75.5 seconds where the IERS
+        value is 69.2, which on its own moved the Moon about 3.5 arcseconds.
       </p>
       <p>
         And the engine does not bound its input date at all. It will compute
-        year 900 or year 3500 and return a chart, with no error and no flag,
-        and nothing above says anything about either. zodiacs.org clamps its
-        own forms to 1800–2199; if you are taking dates from users, pick a
-        bound and enforce it yourself.
+        year 900 or year 3500 and return a chart with no error. Nothing above
+        says anything about either, and since rc.8 the chart says so itself:
+        outside 1800–2200 it carries the <code>outside-reference-span</code>{' '}
+        flag. zodiacs.org clamps its own forms to 1800–2199; if you are taking
+        dates from users, pick a bound and enforce it yourself.
       </p>
       <p>
         <a href="https://github.com/zodiacs-org/site/tree/main/docs/engine-validation" rel="noopener noreferrer">One
@@ -211,8 +216,8 @@ const jsonLd = [{
         <li>Tropical only. No sidereal mode, no ayanamsha, no topocentric parallax.</li>
         <li>Sun through Pluto and the true nodes. No Chiron, no asteroids.</li>
         <li>Placidus is undefined inside the polar circle; where the absolute latitude is 90° minus the obliquity or more (66.53° to 66.59° over 1800–2200) it falls back to whole sign and flags it. Porphyry is defined there too.</li>
-        <li>Event searches cap ephemeris evaluations, so they can miss an event between samples. That is a sampling bound, not a guarantee of complete discovery.</li>
-        <li>No input-date bound, and no warning outside the range anyone has checked. See the caveat under accuracy.</li>
+        <li>Event searches sample the motion at a fixed step, so they can miss an event between samples. The solver is tested, not proven complete.</li>
+        <li>No input-date bound. Outside 1800–2200, the range the engine has been checked over, a chart carries the <code>outside-reference-span</code> flag; see the caveat under accuracy.</li>
         <li>The manifest declares Node 18 and newer. What has actually been executed for this candidate is Node 22.22.2 and Node 24.21.0, and the site's Chromium browser checks — narrower than the declaration.</li>
         <li>No interpretation. The engine returns geometry; what it means is your problem, and not an astronomical claim.</li>
       </ul>

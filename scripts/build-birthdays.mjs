@@ -12,6 +12,7 @@
  * Feb 29 is computed from leap years only. The template renders these
  * receipts; prose lives in src/content/birthdays/.
  */
+import './lib/deltat-install.mjs';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';

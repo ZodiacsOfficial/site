@@ -8,10 +8,9 @@
  * Lives beside full.ts and is only ever lazy-loaded with it — the
  * ephemeris stays out of every eager bundle.
  */
+import { findLongitudeCrossingsWith, type LongitudeCrossing } from '@zodiacs/engine/crossings';
 import { bodyLongitude, longitudeSpeed } from './full.js';
-import { findLongitudeCrossingsWith } from './longitude-crossings.js';
 import { clipToReferenceSpan } from './reference-span.js';
-import type { LongitudeCrossing } from './longitude-crossings';
 import type { BodyName } from './types';
 
 const DAY = 86400_000;
@@ -32,7 +31,8 @@ export interface ReturnSeason {
  * A 5-day grid by itself cannot see a pair of passes closer together than
  * one step: for Saturn that is any station within 0.0103° (37″) of the
  * natal degree, for Jupiter 0.0205°. The shared solver re-examines every
- * sampled turn within reach of the target, so such grazing pairs are kept:
+ * sampled turn within reach of the target, so such grazing pairs are kept
+ * (@zodiacs/engine/crossings, the one solver the site and the package run):
  * 4,941 of 4,941 station-graze cases 2020–2030 matched a fine-step reference
  * (docs/platform/evidence/phase1-events/). That is a tested property of the
  * corpus, not a proof of completeness.
@@ -44,6 +44,8 @@ export function findLongitudeCrossings(
   to: Date,
   stepDays = 5,
 ): Crossing[] {
+  // The site's windows are (from, to]; an empty or inverted one has no crossing.
+  if (!(to.getTime() > from.getTime())) return [];
   return findLongitudeCrossingsWith(bodyLongitude, body, targetLon, from, to, stepDays);
 }
 

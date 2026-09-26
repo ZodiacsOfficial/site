@@ -154,9 +154,9 @@
         },
         "summary": "Elevated symbolic attention for this sign, with more friction than ease. Symbolic intensity is elevated. Signal: watchful.",
         "primaryFactor": {
-          "id": "lunation:full:aries:2026-09-26T16:48:53.293Z",
+          "id": "lunation:full:aries:2026-09-26T16:48:59.556Z",
           "kind": "lunation",
-          "at": "2026-09-26T16:48:53.293Z",
+          "at": "2026-09-26T16:48:59.556Z",
           "bodies": [
             "Sun",
             "Moon"
@@ -180,9 +180,9 @@
         },
         "factors": [
           {
-            "id": "lunation:full:aries:2026-09-26T16:48:53.293Z",
+            "id": "lunation:full:aries:2026-09-26T16:48:59.556Z",
             "kind": "lunation",
-            "at": "2026-09-26T16:48:53.293Z",
+            "at": "2026-09-26T16:48:59.556Z",
             "bodies": [
               "Sun",
               "Moon"
@@ -205,9 +205,9 @@
             "source": "src/data/transits-2026-09.json"
           },
           {
-            "id": "aspect:sun:neptune:opposition:2026-09-26T01:41:39.388Z",
+            "id": "aspect:sun:neptune:opposition:2026-09-26T01:41:45.650Z",
             "kind": "aspect",
-            "at": "2026-09-26T01:41:39.388Z",
+            "at": "2026-09-26T01:41:45.650Z",
             "bodies": [
               "Sun",
               "Neptune"
@@ -225,8 +225,8 @@
               "tone": -12,
               "volatility": 15
             },
-            "horizonMultiplier": 0.9824,
-            "calculation": "18 attention / -12 tone / 15 event intensity × 0.9824 horizon multiplier",
+            "horizonMultiplier": 0.9823,
+            "calculation": "18 attention / -12 tone / 15 event intensity × 0.9823 horizon multiplier",
             "explanation": "The exact opposition is scored as frictional for the directly occupied signs (Libra and Aries). This is symbolic scoring, not a causal market mechanism.",
             "source": "src/data/transits-2026-09.json"
           },
@@ -542,9 +542,9 @@
         },
         "summary": "Elevated symbolic attention for this sign, without a strong directional tone. Signal: active.",
         "primaryFactor": {
-          "id": "aspect:sun:neptune:opposition:2026-09-26T01:41:39.388Z",
+          "id": "aspect:sun:neptune:opposition:2026-09-26T01:41:45.650Z",
           "kind": "aspect",
-          "at": "2026-09-26T01:41:39.388Z",
+          "at": "2026-09-26T01:41:45.650Z",
           "bodies": [
             "Sun",
             "Neptune"
@@ -562,16 +562,16 @@
             "tone": -12,
             "volatility": 15
           },
-          "horizonMultiplier": 0.9824,
-          "calculation": "18 attention / -12 tone / 15 event intensity × 0.9824 horizon multiplier",
+          "horizonMultiplier": 0.9823,
+          "calculation": "18 attention / -12 tone / 15 event intensity × 0.9823 horizon multiplier",
           "explanation": "The exact opposition is scored as frictional for the directly occupied signs (Libra and Aries). This is symbolic scoring, not a causal market mechanism.",
           "source": "src/data/transits-2026-09.json"
         },
         "factors": [
           {
-            "id": "aspect:sun:neptune:opposition:2026-09-26T01:41:39.388Z",
+            "id": "aspect:sun:neptune:opposition:2026-09-26T01:41:45.650Z",
             "kind": "aspect",
-            "at": "2026-09-26T01:41:39.388Z",
+            "at": "2026-09-26T01:41:45.650Z",
             "bodies": [
               "Sun",
               "Neptune"
@@ -589,15 +589,15 @@
               "tone": -12,
               "volatility": 15
             },
-            "horizonMultiplier": 0.9824,
-            "calculation": "18 attention / -12 tone / 15 event intensity × 0.9824 horizon multiplier",
+            "horizonMultiplier": 0.9823,
+            "calculation": "18 attention / -12 tone / 15 event intensity × 0.9823 horizon multiplier",
             "explanation": "The exact opposition is scored as frictional for the directly occupied signs (Libra and Aries). This is symbolic scoring, not a causal market mechanism.",
             "source": "src/data/transits-2026-09.json"
           },
           {
-            "id": "aspect:sun:pluto:trine:2026-09-26T05:34:26.664Z",
+            "id": "aspect:sun:pluto:trine:2026-09-26T05:34:33.009Z",
             "kind": "aspect",
-            "at": "2026-09-26T05:34:26.664Z",
+            "at": "2026-09-26T05:34:33.009Z",
             "bodies": [
               "Sun",
               "Pluto"
@@ -804,9 +804,9 @@
         },
         "summary": "A modest sky emphasis for this sign, without a strong directional tone. Signal: steady.",
         "primaryFactor": {
-          "id": "aspect:sun:pluto:trine:2026-09-26T05:34:26.664Z",
+          "id": "aspect:sun:pluto:trine:2026-09-26T05:34:33.009Z",
           "kind": "aspect",
-          "at": "2026-09-26T05:34:26.664Z",
+          "at": "2026-09-26T05:34:33.009Z",
           "bodies": [
             "Sun",
             "Pluto"
@@ -831,9 +831,9 @@
         },
         "factors": [
           {
-            "id": "aspect:sun:pluto:trine:2026-09-26T05:34:26.664Z",
+            "id": "aspect:sun:pluto:trine:2026-09-26T05:34:33.009Z",
             "kind": "aspect",
-            "at": "2026-09-26T05:34:26.664Z",
+            "at": "2026-09-26T05:34:33.009Z",
             "bodies": [
               "Sun",
               "Pluto"
@@ -1083,9 +1083,9 @@
         },
         "summary": "High symbolic attention for this sign, without a strong directional tone. Symbolic intensity is elevated. Signal: charged.",
         "primaryFactor": {
-          "id": "lunation:full:aries:2026-09-26T16:48:53.293Z",
+          "id": "lunation:full:aries:2026-09-26T16:48:59.556Z",
           "kind": "lunation",
-          "at": "2026-09-26T16:48:53.293Z",
+          "at": "2026-09-26T16:48:59.556Z",
           "bodies": [
             "Sun",
             "Moon"
@@ -1109,9 +1109,9 @@
         },
         "factors": [
           {
-            "id": "lunation:full:aries:2026-09-26T16:48:53.293Z",
+            "id": "lunation:full:aries:2026-09-26T16:48:59.556Z",
             "kind": "lunation",
-            "at": "2026-09-26T16:48:53.293Z",
+            "at": "2026-09-26T16:48:59.556Z",
             "bodies": [
               "Sun",
               "Moon"
@@ -1134,9 +1134,9 @@
             "source": "src/data/transits-2026-09.json"
           },
           {
-            "id": "aspect:sun:neptune:opposition:2026-09-26T01:41:39.388Z",
+            "id": "aspect:sun:neptune:opposition:2026-09-26T01:41:45.650Z",
             "kind": "aspect",
-            "at": "2026-09-26T01:41:39.388Z",
+            "at": "2026-09-26T01:41:45.650Z",
             "bodies": [
               "Sun",
               "Neptune"
@@ -1160,9 +1160,9 @@
             "source": "src/data/transits-2026-09.json"
           },
           {
-            "id": "aspect:mars:neptune:trine:2026-10-02T22:25:53.877Z",
+            "id": "aspect:mars:neptune:trine:2026-10-02T22:26:00.221Z",
             "kind": "aspect",
-            "at": "2026-10-02T22:25:53.877Z",
+            "at": "2026-10-02T22:26:00.221Z",
             "bodies": [
               "Mars",
               "Neptune"
@@ -1277,9 +1277,9 @@
         },
         "summary": "A modest sky emphasis for this sign, without a strong directional tone. Signal: steady.",
         "primaryFactor": {
-          "id": "aspect:sun:uranus:trine:2026-09-28T16:21:52.452Z",
+          "id": "aspect:sun:uranus:trine:2026-09-28T16:21:58.797Z",
           "kind": "aspect",
-          "at": "2026-09-28T16:21:52.452Z",
+          "at": "2026-09-28T16:21:58.797Z",
           "bodies": [
             "Sun",
             "Uranus"
@@ -1304,9 +1304,9 @@
         },
         "factors": [
           {
-            "id": "aspect:sun:uranus:trine:2026-09-28T16:21:52.452Z",
+            "id": "aspect:sun:uranus:trine:2026-09-28T16:21:58.797Z",
             "kind": "aspect",
-            "at": "2026-09-28T16:21:52.452Z",
+            "at": "2026-09-28T16:21:58.797Z",
             "bodies": [
               "Sun",
               "Uranus"
@@ -1439,9 +1439,9 @@
         },
         "summary": "Elevated symbolic attention for this sign, without a strong directional tone. Signal: active.",
         "primaryFactor": {
-          "id": "ingress:mars:leo:2026-09-28T02:49:00.999Z",
+          "id": "ingress:mars:leo:2026-09-28T02:49:07.301Z",
           "kind": "ingress",
-          "at": "2026-09-28T02:49:00.999Z",
+          "at": "2026-09-28T02:49:07.301Z",
           "bodies": [
             "Mars"
           ],
@@ -1464,9 +1464,9 @@
         },
         "factors": [
           {
-            "id": "ingress:mars:leo:2026-09-28T02:49:00.999Z",
+            "id": "ingress:mars:leo:2026-09-28T02:49:07.301Z",
             "kind": "ingress",
-            "at": "2026-09-28T02:49:00.999Z",
+            "at": "2026-09-28T02:49:07.301Z",
             "bodies": [
               "Mars"
             ],
@@ -1488,9 +1488,9 @@
             "source": "src/data/transits-2026-09.json"
           },
           {
-            "id": "aspect:mars:neptune:trine:2026-10-02T22:25:53.877Z",
+            "id": "aspect:mars:neptune:trine:2026-10-02T22:26:00.221Z",
             "kind": "aspect",
-            "at": "2026-10-02T22:25:53.877Z",
+            "at": "2026-10-02T22:26:00.221Z",
             "bodies": [
               "Mars",
               "Neptune"
@@ -1587,9 +1587,9 @@
         },
         "summary": "High symbolic attention for this sign, without a strong directional tone. Signal: active.",
         "primaryFactor": {
-          "id": "aspect:sun:neptune:opposition:2026-09-26T01:41:39.388Z",
+          "id": "aspect:sun:neptune:opposition:2026-09-26T01:41:45.650Z",
           "kind": "aspect",
-          "at": "2026-09-26T01:41:39.388Z",
+          "at": "2026-09-26T01:41:45.650Z",
           "bodies": [
             "Sun",
             "Neptune"
@@ -1614,9 +1614,9 @@
         },
         "factors": [
           {
-            "id": "aspect:sun:neptune:opposition:2026-09-26T01:41:39.388Z",
+            "id": "aspect:sun:neptune:opposition:2026-09-26T01:41:45.650Z",
             "kind": "aspect",
-            "at": "2026-09-26T01:41:39.388Z",
+            "at": "2026-09-26T01:41:45.650Z",
             "bodies": [
               "Sun",
               "Neptune"
@@ -1640,9 +1640,9 @@
             "source": "src/data/transits-2026-09.json"
           },
           {
-            "id": "aspect:sun:pluto:trine:2026-09-26T05:34:26.664Z",
+            "id": "aspect:sun:pluto:trine:2026-09-26T05:34:33.009Z",
             "kind": "aspect",
-            "at": "2026-09-26T05:34:26.664Z",
+            "at": "2026-09-26T05:34:33.009Z",
             "bodies": [
               "Sun",
               "Pluto"
@@ -1666,9 +1666,9 @@
             "source": "src/data/transits-2026-09.json"
           },
           {
-            "id": "aspect:sun:uranus:trine:2026-09-28T16:21:52.452Z",
+            "id": "aspect:sun:uranus:trine:2026-09-28T16:21:58.797Z",
             "kind": "aspect",
-            "at": "2026-09-28T16:21:52.452Z",
+            "at": "2026-09-28T16:21:58.797Z",
             "bodies": [
               "Sun",
               "Uranus"
@@ -1755,9 +1755,9 @@
         },
         "summary": "Elevated symbolic attention for this sign, without a strong directional tone. Signal: active.",
         "primaryFactor": {
-          "id": "aspect:mercury:pluto:square:2026-10-02T20:43:00.330Z",
+          "id": "aspect:mercury:pluto:square:2026-10-02T20:43:06.675Z",
           "kind": "aspect",
-          "at": "2026-10-02T20:43:00.330Z",
+          "at": "2026-10-02T20:43:06.675Z",
           "bodies": [
             "Mercury",
             "Pluto"
@@ -1782,9 +1782,9 @@
         },
         "factors": [
           {
-            "id": "aspect:mercury:pluto:square:2026-10-02T20:43:00.330Z",
+            "id": "aspect:mercury:pluto:square:2026-10-02T20:43:06.675Z",
             "kind": "aspect",
-            "at": "2026-10-02T20:43:00.330Z",
+            "at": "2026-10-02T20:43:06.675Z",
             "bodies": [
               "Mercury",
               "Pluto"
@@ -1808,9 +1808,9 @@
             "source": "src/data/transits-2026-10.json"
           },
           {
-            "id": "ingress:mercury:scorpio:2026-09-30T11:44:42.403Z",
+            "id": "ingress:mercury:scorpio:2026-09-30T11:44:48.709Z",
             "kind": "ingress",
-            "at": "2026-09-30T11:44:42.403Z",
+            "at": "2026-09-30T11:44:48.709Z",
             "bodies": [
               "Mercury"
             ],
@@ -1933,9 +1933,9 @@
         },
         "summary": "Elevated symbolic attention for this sign, without a strong directional tone. Signal: active.",
         "primaryFactor": {
-          "id": "aspect:mercury:pluto:square:2026-10-02T20:43:00.330Z",
+          "id": "aspect:mercury:pluto:square:2026-10-02T20:43:06.675Z",
           "kind": "aspect",
-          "at": "2026-10-02T20:43:00.330Z",
+          "at": "2026-10-02T20:43:06.675Z",
           "bodies": [
             "Mercury",
             "Pluto"
@@ -1960,9 +1960,9 @@
         },
         "factors": [
           {
-            "id": "aspect:mercury:pluto:square:2026-10-02T20:43:00.330Z",
+            "id": "aspect:mercury:pluto:square:2026-10-02T20:43:06.675Z",
             "kind": "aspect",
-            "at": "2026-10-02T20:43:00.330Z",
+            "at": "2026-10-02T20:43:06.675Z",
             "bodies": [
               "Mercury",
               "Pluto"
@@ -1986,9 +1986,9 @@
             "source": "src/data/transits-2026-10.json"
           },
           {
-            "id": "aspect:sun:pluto:trine:2026-09-26T05:34:26.664Z",
+            "id": "aspect:sun:pluto:trine:2026-09-26T05:34:33.009Z",
             "kind": "aspect",
-            "at": "2026-09-26T05:34:26.664Z",
+            "at": "2026-09-26T05:34:33.009Z",
             "bodies": [
               "Sun",
               "Pluto"

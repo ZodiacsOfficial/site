@@ -4,7 +4,7 @@
  */
 import { describe, expect, it } from 'vitest';
 import { bodyLongitude, longitudeSpeed } from './full';
-import { findLongitudeCrossingsWith } from './longitude-crossings';
+import { findLongitudeCrossingsWith } from '@zodiacs/engine/crossings';
 import { saturnReturns } from './returns';
 import { yearScan } from './year-scan';
 

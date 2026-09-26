@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "package": "zodiacs-mcp-server",
-  "version": "0.1.0-rc.7",
+  "version": "0.1.0-rc.8",
   "status": "Unpublished release candidate. Not on npm, under this or any other name. Install from the versioned archive at https://zodiacs.org/examples/, whose SHA-256 is published beside it.",
   "sourceRepository": "https://github.com/ZodiacsOfficial/site",
   "sourcePaths": [
@@ -17,11 +17,11 @@
     "note": "Inlined into server.mjs by esbuild because neither is published: the engine is an unpublished candidate, and the comparison is TypeScript in the site repository. Bundling is what keeps one copy of the comparison rules rather than two.",
     "engine": {
       "package": "@zodiacs/engine",
-      "version": "0.1.1-rc.7",
+      "version": "0.1.1-rc.8",
       "releaseStatus": "unpublished-candidate",
       "sourceRepository": "https://github.com/zodiacs-org/engine",
       "sourcePackagePath": "",
-      "artifactSha256": "49b2b03f50fea8a625d443d4fd0f6d03ffc22831e54009fd09c49d07c8698f90"
+      "artifactSha256": "3b934376fa53983cbdd7eb1a6ecf0eb0d50fbc49df01bc610b20c63bd5d12be6"
     },
     "ephemeris": {
       "name": "astronomy-engine",
@@ -63,6 +63,6 @@
     "receipt": "zodiacs.calculation-receipt.draft-v1",
     "note": "Zodiacs-owned draft vocabulary, not an industry interoperability standard."
   },
-  "supersedes": "0.1.0-rc.6",
-  "changedSince": "rc.1 through rc.6 are unchanged and still downloadable; this is a separate immutable archive. The adapter code is the same as rc.6; the bundle differs in the version it reports and the engine inside it, which moves from 0.1.1-rc.6 to 0.1.1-rc.7. With it the ascendant and midheaven use the true obliquity of date, Placidus falls back to whole sign at 90\u00b0 minus the obliquity (about 66.56\u00b0) instead of 66\u00b0, an aspect is applying while its orb is shrinking at that instant, and speeds are central differences over \u00b10.001 day (\u00b10.25 day for the true node). Planetary longitudes are unchanged. Records written with rc.6 still parse and compare; one naming rc.6 is not re-run on this engine, so its differences stay hypotheses."
+  "supersedes": "0.1.0-rc.7",
+  "changedSince": "rc.1 through rc.7 are unchanged and still downloadable; this is a separate immutable archive. The engine inside it moves from 0.1.1-rc.7 to 0.1.1-rc.8, which takes \u0394T from an observed model with a band instead of astronomy-engine's 2004 polynomial: in 2026 \u0394T is 69.20 s where rc.7 used 75.50 s, and positions move by the difference, the Moon by about 3.4\u2033. Every calculation record now carries the \u0394T it was computed with and names its ephemeris, under a new conventions set; records written by rc.3 to rc.7 still parse and compare. A chart outside 1800\u20132200 carries a new outside-reference-span flag; this adapter's epoch lies inside that span, so none of its own charts does. The comparison changes where records now carry \u0394T: it lists every field of each record's \u0394T, a different moment accounts for a different modelled value, a pinned or otherwise different \u0394T at one instant is named as a cause of the positions it moves, and a record whose caller pinned \u0394T is recalculated with that pin, as the engine's own replay does. A record naming rc.7 is not re-run on this engine, so its differences stay hypotheses."
 }

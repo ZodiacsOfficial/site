@@ -274,7 +274,9 @@ describe('scanTransitContacts', () => {
   });
 
   it('resolves two contacts only seconds apart at the true station extremum', () => {
-    const nearStation = new Date('2026-02-26T06:47:11.908Z');
+    // Ten seconds past Mercury's station; both instants here moved 6.017 s
+    // later with engine 0.1.1-rc.8's observed ΔT, the same TT as before.
+    const nearStation = new Date('2026-02-26T06:47:17.925Z');
     const targetLon = bodyLongitude('Mercury', nearStation);
     const contacts = scanTransitContacts(
       { bodies: [at('Sun', targetLon)], angles: null },
@@ -297,7 +299,7 @@ describe('scanTransitContacts', () => {
   });
 
   it('does not insert a synthetic station contact between two real roots', () => {
-    const station = new Date('2026-02-26T06:47:01.447Z');
+    const station = new Date('2026-02-26T06:47:07.464Z');
     const stationLon = bodyLongitude('Mercury', station);
     const errorAt = (date: Date) => Math.abs(normalize(
       bodyLongitude('Mercury', date) - stationLon + 180,

@@ -12,16 +12,16 @@
     },
     {
       "body": "Moon",
-      "lon": 59.7124,
+      "lon": 59.7125,
       "lat": -4.2615,
-      "speed": 12.023641,
+      "speed": 12.023101,
       "retrograde": false
     },
     {
       "body": "Mercury",
       "lon": 126.336,
       "lat": -1.6612,
-      "speed": 0.372831,
+      "speed": 0.372851,
       "retrograde": false
     },
     {
@@ -33,9 +33,9 @@
     },
     {
       "body": "Mars",
-      "lon": 283.3963,
+      "lon": 283.3962,
       "lat": -5.2397,
-      "speed": -0.294293,
+      "speed": -0.294301,
       "retrograde": true
     },
     {
@@ -56,41 +56,41 @@
       "body": "Uranus",
       "lon": 280.6122,
       "lat": -0.3739,
-      "speed": -0.040416,
+      "speed": -0.040417,
       "retrograde": true
     },
     {
       "body": "Neptune",
       "lon": 102.399,
       "lat": -0.8185,
-      "speed": 0.037223,
+      "speed": 0.037224,
       "retrograde": false
     },
     {
       "body": "Pluto",
       "lon": 83.7468,
       "lat": -7.4728,
-      "speed": 0.022498,
+      "speed": 0.022499,
       "retrograde": false
     },
     {
       "body": "North Node",
       "lon": 113.4131,
       "lat": 0,
-      "speed": -0.023484,
+      "speed": -0.023481,
       "retrograde": true
     },
     {
       "body": "South Node",
       "lon": 293.4131,
       "lat": 0,
-      "speed": -0.023484,
+      "speed": -0.023481,
       "retrograde": true
     }
   ],
   "angles": {
     "asc": 143.5205,
-    "mc": 53.3366
+    "mc": 53.3363
   },
   "houses": {
     "system": "whole",

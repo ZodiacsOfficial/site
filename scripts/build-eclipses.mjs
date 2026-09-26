@@ -18,6 +18,7 @@
  * eclipse must be present) and refuses to write otherwise. Refresh
  * yearly alongside sky.json.
  */
+import './lib/deltat-install.mjs';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';

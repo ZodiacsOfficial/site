@@ -235,8 +235,8 @@
       "body": "Jupiter",
       "sign": "leo",
       "at": "2026-09-26T12:00:00.000Z",
-      "longitude": 138.7712394849782,
-      "degree": 18.771239484978196,
+      "longitude": 138.77122598690107,
+      "degree": 18.771225986901072,
       "retrograde": false
     },
     {
@@ -245,8 +245,8 @@
       "body": "Mars",
       "sign": "cancer",
       "at": "2026-09-26T12:00:00.000Z",
-      "longitude": 119.04587818493786,
-      "degree": 29.045878184937862,
+      "longitude": 119.0458350462003,
+      "degree": 29.045835046200295,
       "retrograde": false
     },
     {
@@ -255,8 +255,8 @@
       "body": "Mercury",
       "sign": "libra",
       "at": "2026-09-26T12:00:00.000Z",
-      "longitude": 204.51850166241226,
-      "degree": 24.51850166241229,
+      "longitude": 204.51839871343742,
+      "degree": 24.518398713437364,
       "retrograde": false
     },
     {
@@ -265,8 +265,8 @@
       "body": "Moon",
       "sign": "aries",
       "at": "2026-09-26T12:00:00.000Z",
-      "longitude": 0.9076087738335445,
-      "degree": 0.9076087738335445,
+      "longitude": 0.90662511170774,
+      "degree": 0.90662511170774,
       "retrograde": false
     },
     {
@@ -275,8 +275,8 @@
       "body": "Neptune",
       "sign": "aries",
       "at": "2026-09-26T12:00:00.000Z",
-      "longitude": 2.990067635003925,
-      "degree": 2.990067635003925,
+      "longitude": 2.9900696600446395,
+      "degree": 2.9900696600446395,
       "retrograde": true
     },
     {
@@ -285,8 +285,8 @@
       "body": "Pluto",
       "sign": "aquarius",
       "at": "2026-09-26T12:00:00.000Z",
-      "longitude": 303.1579578799579,
-      "degree": 3.1579578799578485,
+      "longitude": 303.1579585345022,
+      "degree": 3.1579585345021997,
       "retrograde": true
     },
     {
@@ -295,8 +295,8 @@
       "body": "Saturn",
       "sign": "aries",
       "at": "2026-09-26T12:00:00.000Z",
-      "longitude": 11.925970449354338,
-      "degree": 11.925970449354338,
+      "longitude": 11.925976084025251,
+      "degree": 11.925976084025251,
       "retrograde": true
     },
     {
@@ -305,8 +305,8 @@
       "body": "Sun",
       "sign": "libra",
       "at": "2026-09-26T12:00:00.000Z",
-      "longitude": 183.42273348154285,
-      "degree": 3.4227334815428776,
+      "longitude": 183.422662005029,
+      "degree": 3.4226620050289966,
       "retrograde": false
     },
     {
@@ -315,8 +315,8 @@
       "body": "Uranus",
       "sign": "gemini",
       "at": "2026-09-26T12:00:00.000Z",
-      "longitude": 65.59274279330828,
-      "degree": 5.592742793308275,
+      "longitude": 65.5927437512637,
+      "degree": 5.592743751263697,
       "retrograde": true
     },
     {
@@ -325,47 +325,47 @@
       "body": "Venus",
       "sign": "scorpio",
       "at": "2026-09-26T12:00:00.000Z",
-      "longitude": 217.62735546015782,
-      "degree": 7.627355460157787,
+      "longitude": 217.62733747747274,
+      "degree": 7.627337477472793,
       "retrograde": false
     },
     {
-      "id": "fact:2026-09-26:event:aspect:2026-09-26T01:41:39.388Z:sun-opposition-neptune",
+      "id": "fact:2026-09-26:event:aspect:2026-09-26T01:41:45.650Z:sun-opposition-neptune",
       "kind": "sky-event",
       "eventKind": "aspect",
       "body": "Sun",
-      "at": "2026-09-26T01:41:39.388Z",
+      "at": "2026-09-26T01:41:45.650Z",
       "eventType": "opposition",
       "a": "Sun",
       "b": "Neptune",
       "aSign": "libra",
-      "aDegree": 3.001990699322846,
+      "aDegree": 3.001990249315554,
       "bSign": "aries",
-      "bDegree": 3.0019899335931086,
+      "bDegree": 3.0019899463140973,
       "orb": 0
     },
     {
-      "id": "fact:2026-09-26:event:aspect:2026-09-26T05:34:26.664Z:sun-trine-pluto",
+      "id": "fact:2026-09-26:event:aspect:2026-09-26T05:34:33.009Z:sun-trine-pluto",
       "kind": "sky-event",
       "eventKind": "aspect",
       "body": "Sun",
-      "at": "2026-09-26T05:34:26.664Z",
+      "at": "2026-09-26T05:34:33.009Z",
       "eventType": "trine",
       "a": "Sun",
       "b": "Pluto",
       "aSign": "libra",
-      "aDegree": 3.160375950305138,
+      "aDegree": 3.160376440310756,
       "bSign": "aquarius",
-      "bDegree": 3.1603758760659275,
+      "bDegree": 3.1603758714718424,
       "orb": 0
     },
     {
-      "id": "fact:2026-09-26:event:lunation:2026-09-26T16:48:53.293Z:moon-full",
+      "id": "fact:2026-09-26:event:lunation:2026-09-26T16:48:59.556Z:moon-full",
       "kind": "sky-event",
       "eventKind": "lunation",
       "sign": "aries",
-      "at": "2026-09-26T16:48:53.293Z",
-      "degree": 3.6193485037659343,
+      "at": "2026-09-26T16:48:59.556Z",
+      "degree": 3.6193423751733462,
       "eventType": "full"
     }
   ],
@@ -381,7 +381,7 @@
           "templateId": "aspect-collective.v1",
           "scope": "collective",
           "evidenceRefs": [
-            "fact:2026-09-26:event:aspect:2026-09-26T01:41:39.388Z:sun-opposition-neptune"
+            "fact:2026-09-26:event:aspect:2026-09-26T01:41:45.650Z:sun-opposition-neptune"
           ]
         },
         {
@@ -391,7 +391,7 @@
           "templateId": "aspect-collective.v1",
           "scope": "collective",
           "evidenceRefs": [
-            "fact:2026-09-26:event:aspect:2026-09-26T05:34:26.664Z:sun-trine-pluto"
+            "fact:2026-09-26:event:aspect:2026-09-26T05:34:33.009Z:sun-trine-pluto"
           ]
         },
         {
@@ -445,7 +445,7 @@
           "templateId": "aspect-collective.v1",
           "scope": "collective",
           "evidenceRefs": [
-            "fact:2026-09-26:event:aspect:2026-09-26T01:41:39.388Z:sun-opposition-neptune"
+            "fact:2026-09-26:event:aspect:2026-09-26T01:41:45.650Z:sun-opposition-neptune"
           ]
         },
         {
@@ -455,7 +455,7 @@
           "templateId": "aspect-collective.v1",
           "scope": "collective",
           "evidenceRefs": [
-            "fact:2026-09-26:event:aspect:2026-09-26T05:34:26.664Z:sun-trine-pluto"
+            "fact:2026-09-26:event:aspect:2026-09-26T05:34:33.009Z:sun-trine-pluto"
           ]
         },
         {
@@ -509,7 +509,7 @@
           "templateId": "aspect-collective.v1",
           "scope": "collective",
           "evidenceRefs": [
-            "fact:2026-09-26:event:aspect:2026-09-26T01:41:39.388Z:sun-opposition-neptune"
+            "fact:2026-09-26:event:aspect:2026-09-26T01:41:45.650Z:sun-opposition-neptune"
           ]
         },
         {
@@ -519,7 +519,7 @@
           "templateId": "aspect-collective.v1",
           "scope": "collective",
           "evidenceRefs": [
-            "fact:2026-09-26:event:aspect:2026-09-26T05:34:26.664Z:sun-trine-pluto"
+            "fact:2026-09-26:event:aspect:2026-09-26T05:34:33.009Z:sun-trine-pluto"
           ]
         },
         {
@@ -573,7 +573,7 @@
           "templateId": "aspect-collective.v1",
           "scope": "collective",
           "evidenceRefs": [
-            "fact:2026-09-26:event:aspect:2026-09-26T01:41:39.388Z:sun-opposition-neptune"
+            "fact:2026-09-26:event:aspect:2026-09-26T01:41:45.650Z:sun-opposition-neptune"
           ]
         },
         {
@@ -583,7 +583,7 @@
           "templateId": "aspect-collective.v1",
           "scope": "collective",
           "evidenceRefs": [
-            "fact:2026-09-26:event:aspect:2026-09-26T05:34:26.664Z:sun-trine-pluto"
+            "fact:2026-09-26:event:aspect:2026-09-26T05:34:33.009Z:sun-trine-pluto"
           ]
         },
         {
@@ -637,7 +637,7 @@
           "templateId": "aspect-collective.v1",
           "scope": "collective",
           "evidenceRefs": [
-            "fact:2026-09-26:event:aspect:2026-09-26T01:41:39.388Z:sun-opposition-neptune"
+            "fact:2026-09-26:event:aspect:2026-09-26T01:41:45.650Z:sun-opposition-neptune"
           ]
         },
         {
@@ -647,7 +647,7 @@
           "templateId": "aspect-collective.v1",
           "scope": "collective",
           "evidenceRefs": [
-            "fact:2026-09-26:event:aspect:2026-09-26T05:34:26.664Z:sun-trine-pluto"
+            "fact:2026-09-26:event:aspect:2026-09-26T05:34:33.009Z:sun-trine-pluto"
           ]
         },
         {
@@ -701,7 +701,7 @@
           "templateId": "aspect-collective.v1",
           "scope": "collective",
           "evidenceRefs": [
-            "fact:2026-09-26:event:aspect:2026-09-26T01:41:39.388Z:sun-opposition-neptune"
+            "fact:2026-09-26:event:aspect:2026-09-26T01:41:45.650Z:sun-opposition-neptune"
           ]
         },
         {
@@ -711,7 +711,7 @@
           "templateId": "aspect-collective.v1",
           "scope": "collective",
           "evidenceRefs": [
-            "fact:2026-09-26:event:aspect:2026-09-26T05:34:26.664Z:sun-trine-pluto"
+            "fact:2026-09-26:event:aspect:2026-09-26T05:34:33.009Z:sun-trine-pluto"
           ]
         },
         {
@@ -765,7 +765,7 @@
           "templateId": "aspect-collective.v1",
           "scope": "collective",
           "evidenceRefs": [
-            "fact:2026-09-26:event:aspect:2026-09-26T01:41:39.388Z:sun-opposition-neptune"
+            "fact:2026-09-26:event:aspect:2026-09-26T01:41:45.650Z:sun-opposition-neptune"
           ]
         },
         {
@@ -775,7 +775,7 @@
           "templateId": "aspect-collective.v1",
           "scope": "collective",
           "evidenceRefs": [
-            "fact:2026-09-26:event:aspect:2026-09-26T05:34:26.664Z:sun-trine-pluto"
+            "fact:2026-09-26:event:aspect:2026-09-26T05:34:33.009Z:sun-trine-pluto"
           ]
         },
         {
@@ -829,7 +829,7 @@
           "templateId": "aspect-collective.v1",
           "scope": "collective",
           "evidenceRefs": [
-            "fact:2026-09-26:event:aspect:2026-09-26T01:41:39.388Z:sun-opposition-neptune"
+            "fact:2026-09-26:event:aspect:2026-09-26T01:41:45.650Z:sun-opposition-neptune"
           ]
         },
         {
@@ -839,7 +839,7 @@
           "templateId": "aspect-collective.v1",
           "scope": "collective",
           "evidenceRefs": [
-            "fact:2026-09-26:event:aspect:2026-09-26T05:34:26.664Z:sun-trine-pluto"
+            "fact:2026-09-26:event:aspect:2026-09-26T05:34:33.009Z:sun-trine-pluto"
           ]
         },
         {
@@ -893,7 +893,7 @@
           "templateId": "aspect-collective.v1",
           "scope": "collective",
           "evidenceRefs": [
-            "fact:2026-09-26:event:aspect:2026-09-26T01:41:39.388Z:sun-opposition-neptune"
+            "fact:2026-09-26:event:aspect:2026-09-26T01:41:45.650Z:sun-opposition-neptune"
           ]
         },
         {
@@ -903,7 +903,7 @@
           "templateId": "aspect-collective.v1",
           "scope": "collective",
           "evidenceRefs": [
-            "fact:2026-09-26:event:aspect:2026-09-26T05:34:26.664Z:sun-trine-pluto"
+            "fact:2026-09-26:event:aspect:2026-09-26T05:34:33.009Z:sun-trine-pluto"
           ]
         },
         {
@@ -957,7 +957,7 @@
           "templateId": "aspect-collective.v1",
           "scope": "collective",
           "evidenceRefs": [
-            "fact:2026-09-26:event:aspect:2026-09-26T01:41:39.388Z:sun-opposition-neptune"
+            "fact:2026-09-26:event:aspect:2026-09-26T01:41:45.650Z:sun-opposition-neptune"
           ]
         },
         {
@@ -967,7 +967,7 @@
           "templateId": "aspect-collective.v1",
           "scope": "collective",
           "evidenceRefs": [
-            "fact:2026-09-26:event:aspect:2026-09-26T05:34:26.664Z:sun-trine-pluto"
+            "fact:2026-09-26:event:aspect:2026-09-26T05:34:33.009Z:sun-trine-pluto"
           ]
         },
         {
@@ -1021,7 +1021,7 @@
           "templateId": "aspect-collective.v1",
           "scope": "collective",
           "evidenceRefs": [
-            "fact:2026-09-26:event:aspect:2026-09-26T01:41:39.388Z:sun-opposition-neptune"
+            "fact:2026-09-26:event:aspect:2026-09-26T01:41:45.650Z:sun-opposition-neptune"
           ]
         },
         {
@@ -1031,7 +1031,7 @@
           "templateId": "aspect-collective.v1",
           "scope": "collective",
           "evidenceRefs": [
-            "fact:2026-09-26:event:aspect:2026-09-26T05:34:26.664Z:sun-trine-pluto"
+            "fact:2026-09-26:event:aspect:2026-09-26T05:34:33.009Z:sun-trine-pluto"
           ]
         },
         {
@@ -1085,7 +1085,7 @@
           "templateId": "aspect-collective.v1",
           "scope": "collective",
           "evidenceRefs": [
-            "fact:2026-09-26:event:aspect:2026-09-26T01:41:39.388Z:sun-opposition-neptune"
+            "fact:2026-09-26:event:aspect:2026-09-26T01:41:45.650Z:sun-opposition-neptune"
           ]
         },
         {
@@ -1095,7 +1095,7 @@
           "templateId": "aspect-collective.v1",
           "scope": "collective",
           "evidenceRefs": [
-            "fact:2026-09-26:event:aspect:2026-09-26T05:34:26.664Z:sun-trine-pluto"
+            "fact:2026-09-26:event:aspect:2026-09-26T05:34:33.009Z:sun-trine-pluto"
           ]
         },
         {

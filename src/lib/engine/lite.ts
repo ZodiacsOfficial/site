@@ -1,6 +1,6 @@
 /**
  * Dependency-free low-precision Sun/Moon — the homepage's entire
- * astronomy budget. Meeus-style truncated series, within 0.016° (Sun) and
+ * astronomy budget. Meeus-style truncated series, within 0.017° (Sun) and
  * 0.365° (Moon) of the full engine from 1900 to 2100, sampled every 0.37
  * day: plenty for a ticker and a moon-phase dial, never used for charts
  * (the calculators load the full engine).
