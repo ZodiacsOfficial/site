@@ -1,7 +1,7 @@
 {
   "version": 1,
   "id": "owner-delegated-engine-rc8-observed-deltat-2026-09-25",
-  "baseCommit": "34ac8efae6b893842b2705c61f29f43af9917063",
+  "baseCommit": "90d0f78962b927fad17bf5049b07120ebfdf0fde",
   "protectedPaths": [
     "scripts/build-aura-moon-ingresses.mjs",
     "scripts/registry-outlook.test.mjs",
