@@ -1,0 +1,92 @@
+{
+  "schema": "zodiacs.registry-research-item.v1",
+  "sourceType": "zodiacs-research",
+  "publisher": "Zodiacs.org Research System",
+  "byline": "Zodiacs.org Research System",
+  "method": {
+    "id": "zodiacs.registry-research-method.v1",
+    "version": 1,
+    "generator": "zodiacs.registry-research.deterministic.v1",
+    "deterministicTemplatesOnly": true,
+    "modelAuthoredProse": false,
+    "scoreRule": "The disclosed Registry Outlook sky score is copied before market comparison. Market fields cannot alter that score or its wording.",
+    "observationRule": "Follow-ups use the first archived market snapshot at or after the requested elapsed interval and report the actual elapsed time.",
+    "causalityRule": "Market changes are observations, never evidence that a sky event caused a price or liquidity movement.",
+    "publicationRule": "During the pilot, an exact artifact hash and named reviewer are required before an item enters public feeds."
+  },
+  "riskStatement": "Symbolic research—not investment advice. Market observations never alter the sky score.",
+  "scienceNote": "Astrology has no established predictive relationship with asset prices. Crypto assets can lose all value.",
+  "revisions": [],
+  "id": "zrx-event-brief-station-2026-10-03t07-09-54-194z-venus-retrograde-scorpio",
+  "slug": "event-brief-station-2026-10-03t07-09-54-194z-venus-retrograde-scorpio",
+  "kind": "event-brief",
+  "templateId": "event-brief.v1",
+  "issuedAt": "2026-09-26T12:00:00.000Z",
+  "visibleAt": "2026-10-03T07:09:54.194Z",
+  "eventAt": "2026-10-03T07:09:54.194Z",
+  "title": "Venus stations retrograde · event brief",
+  "summary": "Venus stations retrograde becomes exact at 2026-10-03T07:09:54.194Z. Its symbolic reading and later market observations remain separate.",
+  "url": "/terminal/research/event-brief-station-2026-10-03t07-09-54-194z-venus-retrograde-scorpio/",
+  "signs": [
+    "scorpio"
+  ],
+  "topics": [
+    "calendar",
+    "astrology",
+    "station"
+  ],
+  "symbolicScore": null,
+  "sections": {
+    "skyFact": {
+      "heading": "Sky fact",
+      "body": "Venus stations retrograde is exact at 2026-10-03T07:09:54.194Z, according to the committed transit catalog.",
+      "evidence": [
+        "src/data/transits-2026-10.json"
+      ]
+    },
+    "traditionalReading": {
+      "heading": "Traditional reading",
+      "body": "The event is listed as calendar context. No directional market claim is attached to it.",
+      "evidence": [
+        "src/data/transits-2026-10.json"
+      ]
+    },
+    "marketObservation": {
+      "heading": "Market observation",
+      "body": "No market outcome is attached to this precomputed event brief. A separately timestamped follow-up may be appended after an eligible archive observation.",
+      "evidence": []
+    }
+  },
+  "market": {
+    "available": false,
+    "snapshotId": null,
+    "observedAt": null
+  },
+  "evidence": {
+    "transitSource": "src/data/transits-2026-10.json",
+    "eventKey": "station:2026-10-03T07:09:54.194Z:Venus-retrograde-scorpio",
+    "groupedEvents": null,
+    "outlookEdition": "public/assets/registry-outlook.json#weekly:2026-09-26",
+    "marketSnapshotId": null,
+    "coverage": {
+      "overall": "complete",
+      "events": "complete",
+      "occupancies": "complete",
+      "expectedTransitMonths": [
+        "2026-09",
+        "2026-10"
+      ],
+      "missingTransitMonths": [],
+      "missingOccupancyPlanets": []
+    }
+  },
+  "artifactHash": "5f20951e9db6bf563e0aa9ec1a91827f4e5a6d49b0f2ebbb485164b67242cc25",
+  "publishedAt": "2026-09-26T12:00:00.000Z",
+  "publication": {
+    "mode": "post-pilot-deterministic-allowlist",
+    "publishedAt": "2026-09-26T12:00:00.000Z",
+    "reviewer": null,
+    "artifactSha256": "5f20951e9db6bf563e0aa9ec1a91827f4e5a6d49b0f2ebbb485164b67242cc25"
+  },
+  "status": "approved"
+}

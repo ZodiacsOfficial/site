@@ -1,14 +1,57 @@
 {
   "schema": "zodiacs.registry-research-feed.v1",
-  "generatedAt": "2026-09-25T00:09:10.614Z",
+  "generatedAt": "2026-09-26T00:07:35.825Z",
   "publisher": "Zodiacs.org Research System",
   "window": {
     "previousDays": 30,
     "futureDays": 7,
-    "startsAt": "2026-08-26T00:00:00.000Z",
-    "endsBefore": "2026-10-03T00:00:00.000Z"
+    "startsAt": "2026-08-27T00:00:00.000Z",
+    "endsBefore": "2026-10-04T00:00:00.000Z"
   },
   "items": [
+    {
+      "id": "zrx-event-brief-aspect-2026-10-03t10-38-05-485z-mars-opposition-pluto",
+      "slug": "event-brief-aspect-2026-10-03t10-38-05-485z-mars-opposition-pluto",
+      "kind": "event-brief",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-26T12:00:00.000Z",
+      "visibleAt": "2026-10-03T10:38:05.485Z",
+      "title": "Mars Opposition Pluto · event brief",
+      "summary": "Mars Opposition Pluto becomes exact at 2026-10-03T10:38:05.485Z. Its symbolic reading and later market observations remain separate.",
+      "url": "/terminal/research/event-brief-aspect-2026-10-03t10-38-05-485z-mars-opposition-pluto/",
+      "signs": [
+        "leo",
+        "aquarius"
+      ],
+      "topics": [
+        "calendar",
+        "astrology",
+        "aspect"
+      ],
+      "status": "scheduled"
+    },
+    {
+      "id": "zrx-event-brief-station-2026-10-03t07-09-54-194z-venus-retrograde-scorpio",
+      "slug": "event-brief-station-2026-10-03t07-09-54-194z-venus-retrograde-scorpio",
+      "kind": "event-brief",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-26T12:00:00.000Z",
+      "visibleAt": "2026-10-03T07:09:54.194Z",
+      "title": "Venus stations retrograde · event brief",
+      "summary": "Venus stations retrograde becomes exact at 2026-10-03T07:09:54.194Z. Its symbolic reading and later market observations remain separate.",
+      "url": "/terminal/research/event-brief-station-2026-10-03t07-09-54-194z-venus-retrograde-scorpio/",
+      "signs": [
+        "scorpio"
+      ],
+      "topics": [
+        "calendar",
+        "astrology",
+        "station"
+      ],
+      "status": "scheduled"
+    },
     {
       "id": "zrx-event-brief-aspect-2026-10-02t22-25-53-877z-mars-trine-neptune",
       "slug": "event-brief-aspect-2026-10-02t22-25-53-877z-mars-trine-neptune",
@@ -139,6 +182,27 @@
       "status": "scheduled"
     },
     {
+      "id": "zrx-daily-market-brief-2026-09-26",
+      "slug": "daily-market-brief-2026-09-26",
+      "kind": "daily-market-brief",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-26T12:00:00.000Z",
+      "visibleAt": "2026-09-26T12:00:00.000Z",
+      "title": "Full Moon in Aries · daily market brief",
+      "summary": "Full Moon in Aries leads the disclosed symbolic index; Aries market measures are recorded separately.",
+      "url": "/terminal/research/daily-market-brief-2026-09-26/",
+      "signs": [
+        "aries"
+      ],
+      "topics": [
+        "markets",
+        "daily-sky",
+        "lunation"
+      ],
+      "status": "scheduled"
+    },
+    {
       "id": "zrx-event-brief-aspect-2026-09-26t05-34-26-664z-sun-trine-pluto",
       "slug": "event-brief-aspect-2026-09-26t05-34-26-664z-sun-trine-pluto",
       "kind": "event-brief",
@@ -183,6 +247,46 @@
       "status": "scheduled"
     },
     {
+      "id": "zrx-market-check-2026-09-18-observation-168h",
+      "slug": "market-check-2026-09-18-observation-168h",
+      "kind": "observation-update",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-26T00:07:35.825Z",
+      "visibleAt": "2026-09-26T00:07:35.825Z",
+      "title": "Aries 7-day observation update",
+      "summary": "7-day follow-up using the first qualifying archived snapshot (191.93 actual hours elapsed).",
+      "url": "/terminal/research/market-check-2026-09-18-observation-168h/",
+      "signs": [
+        "aries"
+      ],
+      "topics": [
+        "markets",
+        "observation-update"
+      ],
+      "status": "published"
+    },
+    {
+      "id": "zrx-market-check-2026-09-26",
+      "slug": "market-check-2026-09-26",
+      "kind": "market-check",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-26T00:07:35.825Z",
+      "visibleAt": "2026-09-26T00:07:35.825Z",
+      "title": "Aries market check · 2026-09-26",
+      "summary": "Aries price, market cap, liquidity, volume, and collection medians at one archived observation.",
+      "url": "/terminal/research/market-check-2026-09-26/",
+      "signs": [
+        "aries"
+      ],
+      "topics": [
+        "markets",
+        "market-check"
+      ],
+      "status": "published"
+    },
+    {
       "id": "zrx-daily-market-brief-2026-09-25",
       "slug": "daily-market-brief-2026-09-25",
       "kind": "daily-market-brief",
@@ -201,7 +305,7 @@
         "daily-sky",
         "occupancy"
       ],
-      "status": "scheduled"
+      "status": "published"
     },
     {
       "id": "zrx-market-check-2026-09-24-observation-24h",
